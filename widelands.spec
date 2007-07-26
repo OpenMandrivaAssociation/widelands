@@ -1,7 +1,7 @@
 %define	name	widelands
 %define	version	b10
 #%define	svn	svn20070315
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -10,13 +10,15 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 URL:		http://widelands.sourceforge.net/
-Source0:	%{name}.tar.bz2
-Patch1:		widelands-localepath.patch
+Source0:	%{name}-build10-source.tar.bz2
+Patch0:		widelands-localepath.patch
+Patch1:		font_handler.cc.diff
+Patch2:		volume_in_conffile.diff
 License:	GPL
 Group:		Games/Strategy
 Summary:	%{Summary}
-BuildRequires:	SDL-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel gettext-devel scons
-BuildRequires:  png-devel optipng pngrewrite ctags astyle
+BuildRequires:	SDL-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
+BuildRequires:  png-devel optipng pngrewrite ctags astyle gettext-devel scons
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Provides: 	perl(Network::ClientHandler)
 Provides: 	perl(Network::Server)
@@ -36,11 +38,14 @@ game. Play it on Win/Linux against human & AI opponents.
 
 %prep
 %setup -q -n %{name}
-%patch1 -p0
+%patch0
+%patch1 -p1
+%patch2
 
 %build
 ./build-widelands.sh \
 	build="release" \
+	build_id="2130" \
 	install_prefix="%{_datadir}/games/%{name}" \
 	bindir="%{_datadir}/games/%{name}" \
 	datadir="%{_datadir}/games/%{name}"
@@ -79,16 +84,6 @@ done
 
 mv locale $RPM_BUILD_ROOT/usr/share/locale
 
-%{__install} -d $RPM_BUILD_ROOT%{_menudir}
-%{__cat} <<EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}):command="%{_gamesbindir}/%{name}" \
-		icon=strategy_section.png \
-		needs="x11" \
-		section="Amusement/Strategy" \
-		title="Widelands"\
-		longtitle="%{Summary}"\
-		xdg="true"
-EOF
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -101,7 +96,7 @@ Icon=%{name}
 Terminal=false
 Type=Application
 StartupNotify=false
-Categories=Game;StrategyGame;X-MandrivaLinux-MoreApplications-Games-Strategy;
+Categories=Game;StrategyGame;
 EOF
 
 %find_lang %{name} --all-name
@@ -120,7 +115,6 @@ EOF
 %doc ChangeLog README.developers COPYING
 %{_gamesdatadir}/%{name}
 %{_datadir}/applications/mandriva-%{name}.desktop
-%{_menudir}/%{name}
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
