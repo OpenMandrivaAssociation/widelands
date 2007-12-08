@@ -1,7 +1,7 @@
 %define	name	widelands
 %define	version	b11
 #%define	svn	svn20070315
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -11,9 +11,6 @@ Version:	%{version}
 Release:	%{release}
 URL:		http://widelands.sourceforge.net/
 Source0:	%{name}-build-11-source.tar.bz2
-#Patch0:		widelands-localepath.patch
-#Patch1:		font_handler.cc.diff
-#Patch2:		volume_in_conffile.diff
 Patch0:         widelands.flagfix.patch
 License:	GPL
 Group:		Games/Strategy
@@ -40,9 +37,6 @@ game. Play it on Win/Linux against human & AI opponents.
 
 %prep
 %setup -q -n %{name}
-#%patch0
-#%patch1 -p1
-#%patch2
 %patch0 -p0
 sed -i 's#flagi#%{optflags}##' build/scons-tools/scons_configure.py
 
@@ -54,18 +48,8 @@ scons	build=release \
 	datadir="%{_gamesdatadir}/%{name}"\
 	localedir=%{_datadir}/locale
 	
-
-#Build translations
-#cd locale
-#../utils/buildcat.py
-#%{__rm} -f *.po
-#%{__rm} -f *.pot
-#%{__rm} -f SConscript
-#cd ..
-
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
-#%{__install} -m755 %{name} -D $RPM_BUILD_ROOT%{_gamesbindir}/%{name}.real
 scons	datadir=$RPM_BUILD_ROOT%{_gamesdatadir}/%{name}\
 	bindir=$RPM_BUILD_ROOT%{_gamesbindir}\
 	localedir=$RPM_BUILD_ROOT%{_datadir}\
@@ -73,28 +57,12 @@ scons	datadir=$RPM_BUILD_ROOT%{_gamesdatadir}/%{name}\
 	install
 
 
-#%{__cat} <<EOF > $RPM_BUILD_ROOT%{_gamesbindir}/%{name}
-
-#cd %{_gamesdatadir}/%{name}
-#!/bin/sh
-#%{_gamesbindir}/%{name}.real \$@
-#EOF
-
 #icons
 %{__install} -d ${RPM_BUILD_ROOT}{%{_miconsdir},%{_liconsdir}}
 %{__install} -m644 pics/wl-ico-16.png -D $RPM_BUILD_ROOT%{_miconsdir}/%{name}.png
 %{__install} -m644 pics/wl-ico-32.png -D $RPM_BUILD_ROOT%{_iconsdir}/%{name}.png
 %{__install} -m644 pics/wl-ico-48.png -D $RPM_BUILD_ROOT%{_liconsdir}/%{name}.png
 
-#%{__install} -d $RPM_BUILD_ROOT%{_gamesdatadir}/%{name}
-
-#%{__install} -d $RPM_BUILD_ROOT%{_gamesdatadir}/%{name}
-#for i in campaigns game_server fonts maps music pics sound tribes txts worlds; do
-#	%{__mv} $i \
-#		$RPM_BUILD_ROOT%{_gamesdatadir}/%{name}/$i
-#done
-
-#mv locale $RPM_BUILD_ROOT/usr/share/locale
 
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
@@ -151,7 +119,7 @@ EOF
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-#%defattr(755,root,root,755)
+%defattr(755,root,root,755)
 %{_gamesbindir}/%{name}
 
 
