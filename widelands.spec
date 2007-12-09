@@ -1,7 +1,7 @@
 %define	name	widelands
 %define	version	b11
 #%define	svn	svn20070315
-%define	release	%mkrel 2
+%define	release	%mkrel 3
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -17,7 +17,7 @@ Group:		Games/Strategy
 Summary:	%{Summary}
 BuildRequires:	SDL-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
 BuildRequires:  png-devel optipng pngrewrite ctags gettext-devel scons
-BuildRequires:	SDL_gfx-devel
+BuildRequires:	SDL_gfx-devel ggz-client-libs-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Provides: 	perl(Network::ClientHandler)
 Provides: 	perl(Network::Server)
@@ -46,7 +46,8 @@ scons	build=release \
 	install_prefix="%{_gamesdatadir}/%{name}"\
 	bindir="%{_gamesbindir}/%{name}"\
 	datadir="%{_gamesdatadir}/%{name}"\
-	localedir=%{_datadir}/locale
+	localedir=%{_datadir}/locale\
+	enable_ggz=1
 	
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
