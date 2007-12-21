@@ -18,6 +18,7 @@ Summary:	%{Summary}
 BuildRequires:	SDL-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
 BuildRequires:  png-devel optipng pngrewrite ctags gettext-devel scons
 BuildRequires:	SDL_gfx-devel ggz-client-libs-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Provides: 	perl(Network::ClientHandler)
 Provides: 	perl(Network::Server)
 Provides:	perl(Protocol::ProtocolPacket)
