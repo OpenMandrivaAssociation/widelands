@@ -1,7 +1,7 @@
 %define	name	widelands
-%define	version	b11
-#%define	svn	svn20070315
-%define	release	%mkrel 3
+%define	version	b12
+##%define	svn	svn20070315
+%define	release	%mkrel 1
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -10,9 +10,9 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 URL:		http://widelands.sourceforge.net/
-Source0:	%{name}-build-11-source.tar.bz2
+Source0:	%{name}-build-12-source.tar.bz2
 Patch0:         widelands.flagfix.patch
-License:	GPL
+License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
 BuildRequires:	SDL-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
