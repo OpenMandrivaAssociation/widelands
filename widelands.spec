@@ -15,7 +15,7 @@ Patch0:         widelands.flagfix.patch
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
-BuildRequires:	SDL-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
+BuildRequires:	boost-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
 BuildRequires:  png-devel optipng pngrewrite ctags gettext-devel scons
 BuildRequires:	SDL_gfx-devel ggz-client-libs-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
