@@ -1,7 +1,6 @@
 %define	name	widelands
-%define	version	b12
-##%define	svn	svn20070315
-%define	release	%mkrel 1
+%define	version	b13
+%define	release	%mkrel 0.rc2.1
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -9,26 +8,16 @@ Epoch: 2
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-URL:		http://widelands.sourceforge.net/
-Source0:	%{name}-build-12-source.tar.bz2
-Patch0:         widelands.flagfix.patch
+URL:		http://xoops.widelands.org/
+Source0:	%{name}-Build13rc2-src.tar.bz2
+#Patch0:         widelands.flagfix.patch
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
 BuildRequires:	boost-devel SDL_image-devel SDL_net-devel SDL_ttf-devel SDL_mixer-devel
 BuildRequires:  png-devel optipng pngrewrite ctags gettext-devel scons
-BuildRequires:	SDL_gfx-devel ggz-client-libs-devel
+BuildRequires:	SDL_gfx-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Provides: 	perl(Network::ClientHandler)
-Provides: 	perl(Network::Server)
-Provides:	perl(Protocol::ProtocolPacket)
-Provides:	perl(Protocol::ProtocolPacket_ChatMessage)
-Provides:	perl(Protocol::ProtocolPacket_Connect)
-Provides:	perl(Protocol::ProtocolPacket_GetRoomInfo)
-Provides:	perl(Protocol::ProtocolPacket_GetUserInfo)
-Provides:	perl(Protocol::ProtocolPacket_Hello)
-Provides:	perl(Protocol::ProtocolPacket_Ping)
-Provides:	perl(Protocol::ProtocolPacket_UserEntered)
 
 %description
 Widelands is inspired by Bluebyte's Settlers II and will someday be the
@@ -37,7 +26,7 @@ game. Play it on Win/Linux against human & AI opponents.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p0
+#%patch0 -p0
 sed -i 's#flagi#%{optflags}##' build/scons-tools/scons_configure.py
 
 %build
@@ -46,8 +35,7 @@ scons	build=release \
 	install_prefix="%{_gamesdatadir}/%{name}"\
 	bindir="%{_gamesbindir}/%{name}"\
 	datadir="%{_gamesdatadir}/%{name}"\
-	localedir=%{_datadir}/locale\
-	enable_ggz=1
+	localedir=%{_datadir}/locale
 	
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
@@ -85,22 +73,37 @@ EOF
 # preparing system before update
 cat << EOF | while read name; do rm -rf "%{_gamesdatadir}/%{name}/maps/${name}.wmf"; done
 Checkmate
-Dry Riverbed
-Elven Forests
-Enemy in sight
-Finlakes
-Firegames
-Four Castles
-Glacier Lake
-Golden Peninsula
-Lake of tranquility
+Mystical Maze
+Comet Island
 Plateau
+Crater
+Rendez-Vous
+Dry Riverbed
 Riverlands
-The Oasis Triangle
+Elven Forests
+SConscript
+Enemy in sight
+Swamp Island
+Finlakes
 The big lake
+Firegames
+The Far North
+Four Castles
 The long way
+Four Mountains
+The Oasis Triangle
+Glacier Lake
+The pass through the mountains
+Golden Peninsula
+The Thaw
+Impact
+Three Warriors
+Islands at war
 Two frontiers
+Lake of tranquility
 War of the Valleys
+Last Bastion
+Wisent Valley
 EOF
 
 %if %mdkversion < 200900
