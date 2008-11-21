@@ -35,13 +35,13 @@ scons	build=release \
 	install_prefix="%{_gamesdatadir}/%{name}"\
 	bindir="%{_gamesbindir}/%{name}"\
 	datadir="%{_gamesdatadir}/%{name}"\
-	localedir=%{_datadir}/locale
+	localedir="%{_datadir}/locale"
 	
 %install
 %{__rm} -rf $RPM_BUILD_ROOT
 scons	datadir=$RPM_BUILD_ROOT%{_gamesdatadir}/%{name}\
 	bindir=$RPM_BUILD_ROOT%{_gamesbindir}\
-	localedir=$RPM_BUILD_ROOT%{_datadir}\
+	localedir=$RPM_BUILD_ROOT%{_datadir}/locale\
 	build_id=%{version}\
 	install
 
