@@ -1,6 +1,6 @@
 %define	name	widelands
 %define	version	b13
-%define	release	%mkrel 0.rc2.1
+%define	release	%mkrel 1
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -9,8 +9,7 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 URL:		http://xoops.widelands.org/
-Source0:	%{name}-Build13rc2-src.tar.bz2
-#Patch0:         widelands.flagfix.patch
+Source0:	Widelands-Build13-src.tar.bz2
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
@@ -25,8 +24,7 @@ logical extension of this game although you do not need the original
 game. Play it on Win/Linux against human & AI opponents.
 
 %prep
-%setup -q -n %{name}
-#%patch0 -p0
+%setup -q
 sed -i 's#flagi#%{optflags}##' build/scons-tools/scons_configure.py
 
 %build
