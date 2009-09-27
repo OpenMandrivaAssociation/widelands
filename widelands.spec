@@ -1,7 +1,7 @@
 %define	name	widelands
 %define	version	b14
-%define svn	svn4484
-%define	release	%mkrel 0.%{svn}.1
+%define svn	svn4498
+%define	release	%mkrel 1
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -10,7 +10,7 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 URL:		http://xoops.widelands.org/
-Source0:	%{name}-%{svn}.tar.lzma
+Source0:	%{name}-build14.tar.xz
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
