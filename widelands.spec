@@ -1,7 +1,7 @@
 %define	name	widelands
 %define	version	b14
 %define svn	svn4498
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	Summary	Settlers II clone
 
 Epoch: 2
