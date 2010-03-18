@@ -62,7 +62,7 @@ Files to play %name in other languages than English.
 
 %files -n %{name}-i18n
 %defattr(644,root,root,755)
-%{_datadir}/%{name}/locale
+%{_datadir}/locale
 
 #------------------------------------------------
 
