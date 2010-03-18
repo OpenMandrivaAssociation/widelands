@@ -169,7 +169,7 @@ EOF
 %endif
 
 #don't package doc twice
-rm -rf %{_gamesdatadir}/%{name}/doc
+rm -rf %{buildroot}%{_gamesdatadir}/%{name}/doc
 
 %clean
 %{__rm} -rf %{buildroot}
