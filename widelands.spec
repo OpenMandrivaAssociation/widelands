@@ -1,6 +1,6 @@
 %define	name	widelands
-%define	version	b14
-%define	release	%mkrel 3
+%define	version	b15
+%define	release	%mkrel 1
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -8,8 +8,8 @@ Epoch: 2
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-URL:		http://xoops.widelands.org/
-Source0:	%{name}-build14.tar.xz
+URL:		http://www.widelands.org/
+Source0:	%{name}-build15-src.tar.bz2
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
@@ -23,9 +23,13 @@ BuildRequires:	optipng
 BuildRequires:	pngrewrite
 BuildRequires:	ctags
 BuildRequires:	gettext-devel
-BuildRequires:	scons
+BuildRequires:	cmake
 BuildRequires:	SDL_gfx-devel
 BuildRequires:	ggz-client-libs-devel 
+BuildRequires:	libjpeg-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	liblua-devel
+BuildRequires:	doxygen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(post): ggz-client-libs
 Requires(preun): ggz-client-libs
@@ -54,7 +58,7 @@ idea what Widelands is about.
 #------------------------------------------------
 
 %package -n %{name}-i18n
-Summary: Translations for %name
+Summary: Translations for %name.
 Group:   Games/Strategy
 
 %description -n %{name}-i18n
@@ -62,12 +66,12 @@ Files to play %name in other languages than English.
 
 %files -n %{name}-i18n
 %defattr(644,root,root,755)
-%{_datadir}/locale
+%{_gamesdatadir}/%{name}/locale
 
 #------------------------------------------------
 
 %package -n %{name}-basic-data
-Summary: Basic data set for %name
+Summary: Basic data set for %name.
 Group:   Games/Strategy
 
 %description -n %{name}-basic-data
@@ -88,7 +92,7 @@ Basic data set used by %name. Without these files you will not be able to play.
 #------------------------------------------------
 
 %package -n %{name}-maps
-Summary: Maps for %name
+Summary: Maps for %name.
 Group:   Games/Strategy
 
 %description -n %{name}-maps
@@ -101,7 +105,7 @@ Maps for %name.
 #------------------------------------------------
 
 %package -n %{name}-music
-Summary: Music for %name
+Summary: Music for %name.
 Group:   Games/Strategy
 
 %description -n %{name}-music
@@ -115,25 +119,21 @@ Music files for %name. These are not needed, but may improve fun while playing.
 
 
 %prep
-%setup -q -n %{name}
-sed -i 's#flagi#%{optflags}##' build/scons-tools/scons_configure.py
+%setup -q -n %{name}-build15-src
 
 %build
-scons	build=release \
-	build_id=%{version}\
-	install_prefix="%{_gamesdatadir}/%{name}"\
-	bindir="%{_gamesbindir}/%{name}"\
-	datadir="%{_gamesdatadir}/%{name}"\
-	localedir="%{_datadir}/locale"
-	
+%cmake -DCMAKE_BUILD_TYPE="Release" \
+	-DWL_INSTALL_PREFIX="/" \
+	-DWL_BINDIR="%{_gamesbindir}/%{name}" \
+	-DWL_DATADIR="%{_gamesdatadir}/%{name}"
+
+%make
+
 %install
 %{__rm} -rf %{buildroot}
-scons	datadir=%{buildroot}%{_gamesdatadir}/%{name}\
-	bindir=%{buildroot}%{_gamesbindir}\
-	localedir=%{buildroot}%{_datadir}/locale\
-	build_id=%{version}\
-	install
-
+cd build
+%{makeinstall_std}
+cd ..
 
 #icons
 %{__install} -d %{buildroot}{%{_miconsdir},%{_liconsdir}}
@@ -167,9 +167,6 @@ EOF
 %postun
 %clean_menus
 %endif
-
-#don't package doc twice
-rm -rf %{buildroot}%{_gamesdatadir}/%{name}/doc
 
 %clean
 %{__rm} -rf %{buildroot}
