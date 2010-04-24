@@ -79,6 +79,9 @@ Basic data set used by %name. Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 %defattr(644,root,root,755)
+%{_gamesdatadir}/%{name}/COPYING
+%{_gamesdatadir}/%{name}/CREDITS
+%{_gamesdatadir}/%{name}/ChangeLog
 %{_gamesdatadir}/%{name}/VERSION
 %{_gamesdatadir}/%{name}/campaigns
 %{_gamesdatadir}/%{name}/fonts
