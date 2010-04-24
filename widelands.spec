@@ -28,7 +28,7 @@ BuildRequires:	SDL_gfx-devel
 BuildRequires:	ggz-client-libs-devel 
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	liblua-devel
+BuildRequires:	lua-devel
 BuildRequires:	doxygen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(post): ggz-client-libs
