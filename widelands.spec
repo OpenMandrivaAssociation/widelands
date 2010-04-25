@@ -1,6 +1,6 @@
 %define	name	widelands
 %define	version	b15
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -33,10 +33,10 @@ BuildRequires:	doxygen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(post): ggz-client-libs
 Requires(preun): ggz-client-libs
-Requires:       %{name}-basic-data
-Requires:       %{name}-maps
-Suggests:       %{name}-i18n
-Suggests:       %{name}-music
+Requires:       %{name}-basic-data = %{version}-%{release}
+Requires:       %{name}-maps = %{version}-%{release}
+Suggests:       %{name}-i18n = %{version}-%{release}
+Suggests:       %{name}-music = %{version}-%{release}
 
 %description
 Widelands is an open source real-time strategy game. It is built upon 
@@ -126,9 +126,10 @@ Music files for %name. These are not needed, but may improve fun while playing.
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
-	-DWL_INSTALL_PREFIX="/" \
-	-DWL_BINDIR="%{_gamesbindir}/%{name}" \
-	-DWL_DATADIR="%{_gamesdatadir}/%{name}"
+	-DWL_INSTALL_PREFIX="/usr" \
+	-DWL_BINDIR="games" \
+	-DWL_DATADIR="share/games/%{name}" \
+	-DWL_LOCALEDIR="share/%{name}/locale"
 
 %make
 
