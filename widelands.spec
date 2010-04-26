@@ -1,6 +1,6 @@
 %define	name	widelands
 %define	version	b15
-%define	release	%mkrel 2
+%define	release	%mkrel 3
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -60,6 +60,7 @@ idea what Widelands is about.
 %package -n %{name}-i18n
 Summary: Translations for %name
 Group:   Games/Strategy
+Requires: %{name} = %{version}-%{release}
 
 %description -n %{name}-i18n
 Files to play %name in other languages than English.
@@ -73,6 +74,7 @@ Files to play %name in other languages than English.
 %package -n %{name}-basic-data
 Summary: Basic data set for %name
 Group:   Games/Strategy
+Requires: %{name} = %{version}-%{release}
 
 %description -n %{name}-basic-data
 Basic data set used by %name. Without these files you will not be able to play.
@@ -97,6 +99,7 @@ Basic data set used by %name. Without these files you will not be able to play.
 %package -n %{name}-maps
 Summary: Maps for %name
 Group:   Games/Strategy
+Requires: %{name} = %{version}-%{release}
 
 %description -n %{name}-maps
 Maps for %name.
@@ -110,6 +113,7 @@ Maps for %name.
 %package -n %{name}-music
 Summary: Music for %name
 Group:   Games/Strategy
+Requires: %{name} = %{version}-%{release}
 
 %description -n %{name}-music
 Music files for %name. These are not needed, but may improve fun while playing.
