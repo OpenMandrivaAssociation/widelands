@@ -133,7 +133,7 @@ Music files for %name. These are not needed, but may improve fun while playing.
 	-DWL_INSTALL_PREFIX="/usr" \
 	-DWL_BINDIR="games" \
 	-DWL_DATADIR="share/games/%{name}" \
-	-DWL_LOCALEDIR="share/%{name}/locale"
+	-DWL_LOCALEDIR="share/games/%{name}/locale"
 
 %make
 
@@ -153,6 +153,7 @@ cd ..
 mkdir -p %{buildroot}%{_datadir}/ggz
 install -p -D -m644 src/network/game_server/%{name}.dsc %{buildroot}%{_datadir}/ggz/%{name}.dsc
 
+#menu entry
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
