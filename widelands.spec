@@ -1,6 +1,6 @@
 %define	name	widelands
 %define	version	b15
-%define	release	%mkrel 3
+%define	release	%mkrel 4
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -13,7 +13,7 @@ Source0:	%{name}-build15-src.tar.bz2
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
-BuildRequires:	boost-devel 
+BuildRequires:	boost-devel
 BuildRequires:	SDL_image-devel
 BuildRequires:	SDL_net-devel
 BuildRequires:	SDL_ttf-devel
@@ -25,7 +25,7 @@ BuildRequires:	ctags
 BuildRequires:	gettext-devel
 BuildRequires:	cmake
 BuildRequires:	SDL_gfx-devel
-BuildRequires:	ggz-client-libs-devel 
+BuildRequires:	ggz-client-libs-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	lua-devel
@@ -33,10 +33,10 @@ BuildRequires:	doxygen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(post): ggz-client-libs
 Requires(preun): ggz-client-libs
-Requires:       %{name}-basic-data = %{version}
-Requires:       %{name}-maps = %{version}
-Suggests:       %{name}-i18n = %{version}
-Suggests:       %{name}-music = %{version}
+Requires:       %{name}-basic-data
+Requires:       %{name}-maps
+Suggests:       %{name}-i18n
+Suggests:       %{name}-music
 
 %description
 Widelands is an open source real-time strategy game. It is built upon 
@@ -60,7 +60,7 @@ idea what Widelands is about.
 %package -n %{name}-i18n
 Summary: Translations for %name
 Group:   Games/Strategy
-Requires: %{name} = %{version}
+Requires: %{name}
 
 %description -n %{name}-i18n
 Files to play %name in other languages than English.
@@ -74,7 +74,7 @@ Files to play %name in other languages than English.
 %package -n %{name}-basic-data
 Summary: Basic data set for %name
 Group:   Games/Strategy
-Requires: %{name} = %{version}
+Requires: %{name}
 
 %description -n %{name}-basic-data
 Basic data set used by %name. Without these files you will not be able to play.
@@ -99,7 +99,7 @@ Basic data set used by %name. Without these files you will not be able to play.
 %package -n %{name}-maps
 Summary: Maps for %name
 Group:   Games/Strategy
-Requires: %{name} = %{version}
+Requires: %{name}
 
 %description -n %{name}-maps
 Maps for %name.
@@ -113,7 +113,7 @@ Maps for %name.
 %package -n %{name}-music
 Summary: Music for %name
 Group:   Games/Strategy
-Requires: %{name} = %{version}
+Requires: %{name}
 
 %description -n %{name}-music
 Music files for %name. These are not needed, but may improve fun while playing.
