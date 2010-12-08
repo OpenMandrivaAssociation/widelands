@@ -10,6 +10,8 @@ Version:	%{version}
 Release:	%{release}
 URL:		http://www.widelands.org/
 Source0:	%{name}-build15-src.tar.bz2
+Patch0:		widelands-0.15-gcc45.patch
+Patch1:		widelands-0.15-locale.patch
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
@@ -127,6 +129,8 @@ Music files for %name. These are not needed, but may improve fun while playing.
 
 %prep
 %setup -q -n %{name}-build15-src
+%patch0 -p0
+%patch1 -p0
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
