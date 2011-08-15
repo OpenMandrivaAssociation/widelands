@@ -1,6 +1,7 @@
 %define	name	widelands
-%define	version	b15
-%define	release	%mkrel 5
+%define bld	16
+%define	version	b%{bld}
+%define	release	%mkrel 1
 %define	Summary	Settlers II clone
 
 Epoch: 2
@@ -9,9 +10,7 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 URL:		http://www.widelands.org/
-Source0:	%{name}-build15-src.tar.bz2
-Patch0:		widelands-0.15-gcc45.patch
-Patch1:		widelands-0.15-locale.patch
+Source0:	%{name}-build%{bld}-src.tar.bz2
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	%{Summary}
@@ -21,6 +20,8 @@ BuildRequires:	SDL_net-devel
 BuildRequires:	SDL_ttf-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:  png-devel
+BuildRequires:  glew-devel
+BuildRequires:  zlib-devel
 BuildRequires:	optipng 
 BuildRequires:	pngrewrite
 BuildRequires:	ctags
@@ -60,12 +61,12 @@ idea what Widelands is about.
 #------------------------------------------------
 
 %package -n %{name}-i18n
-Summary: Translations for %name
+Summary: Translations for %{name}
 Group:   Games/Strategy
 Requires: %{name}
 
 %description -n %{name}-i18n
-Files to play %name in other languages than English.
+Files to play %{name} in other languages than English.
 
 %files -n %{name}-i18n
 %defattr(644,root,root,755)
@@ -74,12 +75,12 @@ Files to play %name in other languages than English.
 #------------------------------------------------
 
 %package -n %{name}-basic-data
-Summary: Basic data set for %name
+Summary: Basic data set for %{name}
 Group:   Games/Strategy
 Requires: %{name}
 
 %description -n %{name}-basic-data
-Basic data set used by %name. Without these files you will not be able to play.
+Basic data set used by %{name}. Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 %defattr(644,root,root,755)
@@ -91,6 +92,7 @@ Basic data set used by %name. Without these files you will not be able to play.
 %{_gamesdatadir}/%{name}/fonts
 %{_gamesdatadir}/%{name}/global
 %{_gamesdatadir}/%{name}/pics
+%{_gamesdatadir}/%{name}/scripting
 %{_gamesdatadir}/%{name}/sound
 %{_gamesdatadir}/%{name}/tribes
 %{_gamesdatadir}/%{name}/txts
@@ -99,12 +101,12 @@ Basic data set used by %name. Without these files you will not be able to play.
 #------------------------------------------------
 
 %package -n %{name}-maps
-Summary: Maps for %name
+Summary: Maps for %{name}
 Group:   Games/Strategy
 Requires: %{name}
 
 %description -n %{name}-maps
-Maps for %name.
+Maps for %{name}.
 
 %files -n %{name}-maps
 %defattr(644,root,root,755)
@@ -113,12 +115,12 @@ Maps for %name.
 #------------------------------------------------
 
 %package -n %{name}-music
-Summary: Music for %name
+Summary: Music for %{name}
 Group:   Games/Strategy
 Requires: %{name}
 
 %description -n %{name}-music
-Music files for %name. These are not needed, but may improve fun while playing.
+Music files for %{name}. These are not needed, but may improve fun while playing.
 
 %files -n %{name}-music
 %defattr(644,root,root,755)
@@ -128,9 +130,7 @@ Music files for %name. These are not needed, but may improve fun while playing.
 
 
 %prep
-%setup -q -n %{name}-build15-src
-%patch0 -p0
-%patch1 -p0
+%setup -q -n %{name}-build%{bld}-src
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
@@ -144,7 +144,7 @@ Music files for %name. These are not needed, but may improve fun while playing.
 %install
 %{__rm} -rf %{buildroot}
 cd build
-%{makeinstall_std}
+%makeinstall_std
 cd ..
 
 #icons
@@ -184,12 +184,12 @@ EOF
 %clean
 %{__rm} -rf %{buildroot}
 
-%post 	 
+%post
 %{_bindir}/ggz-config --install --force --modfile=%{_datadir}/ggz/%{name}.dsc || :
 
-%preun	 
-if [ $1 -eq 0 ]; then 	 
-   %{_bindir}/ggz-config --remove --modfile=%{_datadir}/ggz/%{name}.dsc || : 	 
+%preun
+if [ $1 -eq 0 ]; then
+   %{_bindir}/ggz-config --remove --modfile=%{_datadir}/ggz/%{name}.dsc || :
 fi
 
 
