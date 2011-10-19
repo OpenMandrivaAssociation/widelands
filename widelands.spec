@@ -1,7 +1,7 @@
 %define	name	widelands
 %define bld	16
 %define	version	b%{bld}
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 %define	Summary	Settlers II clone
 
 Epoch: 2
