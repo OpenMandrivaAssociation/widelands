@@ -41,6 +41,8 @@ Requires:       %{name}-maps
 Suggests:       %{name}-i18n
 Suggests:       %{name}-music
 
+Patch0:		widelands-0.15-png1.5.patch
+
 %description
 Widelands is an open source real-time strategy game. It is built upon 
 libSDL and other open source libraries and is still under heavy development.
@@ -131,6 +133,7 @@ Music files for %{name}. These are not needed, but may improve fun while playing
 
 %prep
 %setup -q -n %{name}-build%{bld}-src
+%patch0 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
