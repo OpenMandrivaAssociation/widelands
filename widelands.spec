@@ -8,6 +8,7 @@ URL:		http://www.widelands.org/
 Source0:	%{name}-build%{bld}-src.tar.bz2
 Patch0:		widelands-0.17-werror.patch
 Patch1:		widelands-0.17-debug.patch
+Patch2:		widelands-0.17-boost.patch
 License:	GPLv2+
 Group:		Games/Strategy
 Summary:	Settlers II clone
@@ -124,6 +125,7 @@ Music files for %{name}. These are not needed, but may improve fun while playing
 %setup -q -n %{name}-build%{bld}-src
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE="Release" \
