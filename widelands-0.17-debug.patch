@@ -1,0 +1,17 @@
+Index: widelands-17~rc1/CMakeLists.txt
+===================================================================
+--- widelands-17~rc1.orig/CMakeLists.txt	2012-04-02 10:34:26.000000000 +0200
++++ widelands-17~rc1/CMakeLists.txt	2012-04-11 14:52:24.000000000 +0200
+@@ -221,10 +221,10 @@
+     IF (WLBUILD_COMPILERVERSION_REP STREQUAL "4.5.1" OR WLBUILD_COMPILERVERSION_REP STREQUAL "4.5.2")
+         message("Detected gcc ${WLBUILD_COMPILERVERSION_REP}")
+         message("Suffering from gcc bug, disabling -O3")
+-        set (CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG" CACHE STRING "Set by widelands CMakeLists.txt" FORCE)
++        set (CMAKE_CXX_FLAGS_RELEASE "-g -O2 -DNDEBUG" CACHE STRING "Set by widelands CMakeLists.txt" FORCE)
+     ELSE (WLBUILD_COMPILERVERSION_REP STREQUAL "4.5.1" OR WLBUILD_COMPILERVERSION_REP STREQUAL "4.5.2")
+         #This line is the default and should be preserved.
+-        set (CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG" CACHE STRING "Set by widelands CMakeLists.txt" FORCE)
++        set (CMAKE_CXX_FLAGS_RELEASE "-g -O3 -DNDEBUG" CACHE STRING "Set by widelands CMakeLists.txt" FORCE)
+     ENDIF (WLBUILD_COMPILERVERSION_REP STREQUAL "4.5.1" OR WLBUILD_COMPILERVERSION_REP STREQUAL "4.5.2")
+ ENDIF (${CMAKE_COMPILER_IS_GNUCXX})
+ 
