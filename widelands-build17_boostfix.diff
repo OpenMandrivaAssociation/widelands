@@ -1,13 +1,12 @@
-Index: widelands-17/CMakeLists.txt
-===================================================================
---- widelands-17.orig/CMakeLists.txt	2012-05-23 13:38:13.000000000 +0200
-+++ widelands-17/CMakeLists.txt	2012-05-23 13:41:22.000000000 +0200
+diff -ur widelands-build17-src/CMakeLists.txt widelands-build17-src_fix/CMakeLists.txt
+--- widelands-build17-src/CMakeLists.txt	2012-04-23 11:46:49.000000000 +0200
++++ widelands-build17-src_fix/CMakeLists.txt	2012-05-05 22:02:24.000000000 +0200
 @@ -140,7 +140,7 @@
  else (WL_UNIT_TESTS)
    message(STATUS "Disabled Unit Tests")
    set (Boost_FIND_COMPONENTS signals)
 -  set (Boost_USE_STATIC_LIBS   ON)
-+  set (Boost_USE_STATIC_LIBS   OFF)
++#  set (Boost_USE_STATIC_LIBS   ON)
    set (Boost_USE_MULTITHREADED ON)
    set (Boost_DETAILED_FAILURE_MSG ON)
    find_package(Boost 1.35.0 COMPONENTS signals REQUIRED)
