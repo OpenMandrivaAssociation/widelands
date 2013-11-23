@@ -3,7 +3,7 @@
 Summary:	Settlers II clone
 Name:		widelands
 Version:	b%{bld}
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Games/Strategy
 URL:		http://www.widelands.org/
