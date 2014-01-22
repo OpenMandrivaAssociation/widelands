@@ -6,7 +6,7 @@ Version:	b%{bld}
 Release:	4
 License:	GPLv2+
 Group:		Games/Strategy
-URL:		http://www.widelands.org/
+Url:		http://www.widelands.org/
 Source0:	%{name}-build%{bld}-src.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
@@ -18,36 +18,34 @@ Patch1:		widelands-0.17-cxxflags.patch
 # fix build error
 Patch2:		widelands-0.17-format-not-string-literal.patch
 
+BuildRequires:	cmake
+BuildRequires:	ctags
+BuildRequires:	doxygen
+BuildRequires:	optipng
+BuildRequires:	pngrewrite
 BuildRequires:	boost-devel
-BuildRequires:	SDL_image-devel
-BuildRequires:	SDL_net-devel
-BuildRequires:	SDL_ttf-devel
-BuildRequires:	SDL_mixer-devel
-BuildRequires:	SDL_gfx-devel
-BuildRequires:	pkgconfig(libpng)
+BuildRequires:	gettext-devel
+BuildRequires:	ggz-client-libs-devel
+BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(libtiff-4)
+BuildRequires:	pkgconfig(lua)
+BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(SDL_gfx)
+BuildRequires:	pkgconfig(SDL_image)
+BuildRequires:	pkgconfig(SDL_mixer)
+BuildRequires:	pkgconfig(SDL_net)
+BuildRequires:	pkgconfig(SDL_ttf)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	optipng
-BuildRequires:	pngrewrite
-BuildRequires:	ctags
-BuildRequires:	gettext-devel
-BuildRequires:	cmake
-BuildRequires:	ggz-client-libs-devel
-BuildRequires:	jpeg-devel
-BuildRequires:	tiff-devel
-BuildRequires:	lua-devel
-BuildRequires:	doxygen
-BuildRequires: 	python-devel
-
-Requires(post): ggz-client-libs
-Requires(preun): ggz-client-libs
 
 Requires:	%{name}-basic-data
 Requires:	%{name}-maps
 Requires:	%{name}-i18n
 Requires:	%{name}-music
+Requires:	ggz-client-libs
 
 %description
 Widelands is an open source real-time strategy game. It is built upon 
@@ -151,7 +149,7 @@ sed -i "1 i #include <unistd.h>" src/main.cc
 	-DWL_BINDIR="games" \
 	-DWL_INSTALL_PREFIX="/usr" \
 	-DWL_INSTALL_DATADIR="share/games/%{name}" \
-	-DWL_INSTALL_LOCALEDIR="share/games/%{name}/locale" \
+	-DWL_INSTALL_LOCALEDIR="/usr/share/games/%{name}/locale" \
 	-DBoost_USE_STATIC_LIBS=OFF
 
 %make
