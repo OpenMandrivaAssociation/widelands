@@ -1,22 +1,15 @@
-%define bld	17
+%define bld	18
 
 Summary:	Settlers II clone
 Name:		widelands
 Version:	b%{bld}
-Release:	4
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
 Source0:	%{name}-build%{bld}-src.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
-# fix "not find boost to build" issue
-# patch from Open Build Service
-Patch0:		%{name}-build%{bld}_boostfix.diff
-# lower gcc optimization from -O3 to O2
-Patch1:		widelands-0.17-cxxflags.patch
-# fix build error
-Patch2:		widelands-0.17-format-not-string-literal.patch
 
 BuildRequires:	cmake
 BuildRequires:	ctags
@@ -32,7 +25,7 @@ BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libtiff-4)
-BuildRequires:	pkgconfig(lua)
+BuildRequires:	pkgconfig(lua) < 5.2
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(SDL_gfx)
 BuildRequires:	pkgconfig(SDL_image)
@@ -138,9 +131,6 @@ These are not needed, but may improve fun while playing.
 
 %prep
 %setup -q -n %{name}-build%{bld}-src
-%patch0 -p1
-%patch1 -p0
-%patch2 -p1
 
 %build
 sed -i "1 i #include <unistd.h>" src/main.cc
