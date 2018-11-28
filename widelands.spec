@@ -1,13 +1,13 @@
-%define bld	18
+%define bld	19
 
 Summary:	Settlers II clone
 Name:		widelands
 Version:	b%{bld}
-Release:	3
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
-Source0:	%{name}-build%{bld}-src.tar.bz2
+Source0:	https://launchpad.net/widelands/build%{bld}/build%{bld}/+download/widelands-build%{bld}-src.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
 
@@ -18,27 +18,25 @@ BuildRequires:	optipng
 BuildRequires:	pngrewrite
 BuildRequires:	boost-devel
 BuildRequires:	gettext-devel
-BuildRequires:	ggz-client-libs-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libtiff-4)
-BuildRequires:	pkgconfig(lua) < 5.2
+BuildRequires:	pkgconfig(lua)
 BuildRequires:	pkgconfig(python)
-BuildRequires:	pkgconfig(SDL_gfx)
-BuildRequires:	pkgconfig(SDL_image)
-BuildRequires:	pkgconfig(SDL_mixer)
-BuildRequires:	pkgconfig(SDL_net)
-BuildRequires:	pkgconfig(SDL_ttf)
+BuildRequires:	pkgconfig(SDL2_gfx)
+BuildRequires:	pkgconfig(SDL2_image)
+BuildRequires:	pkgconfig(SDL2_mixer)
+BuildRequires:	pkgconfig(SDL2_net)
+BuildRequires:	pkgconfig(SDL2_ttf)
 BuildRequires:	pkgconfig(zlib)
 
 Requires:	%{name}-basic-data
 Requires:	%{name}-maps
 Requires:	%{name}-i18n
 Requires:	%{name}-music
-Requires:	ggz-client-libs
 
 %description
 Widelands is an open source real-time strategy game. It is built upon 
@@ -55,6 +53,7 @@ idea what Widelands is about.
 %{_liconsdir}/%{name}.png
 %defattr(755,root,root,755)
 %{_gamesbindir}/%{name}
+%{_gamesbindir}/wl_render_richtext
 
 #------------------------------------------------
 
@@ -88,14 +87,14 @@ Without these files you will not be able to play.
 %{_gamesdatadir}/%{name}/ChangeLog
 %{_gamesdatadir}/%{name}/VERSION
 %{_gamesdatadir}/%{name}/campaigns
-%{_gamesdatadir}/%{name}/fonts
-%{_gamesdatadir}/%{name}/global
-%{_gamesdatadir}/%{name}/pics
+%{_gamesdatadir}/%{name}/i18n
+%{_gamesdatadir}/%{name}/images
 %{_gamesdatadir}/%{name}/scripting
 %{_gamesdatadir}/%{name}/sound
 %{_gamesdatadir}/%{name}/tribes
 %{_gamesdatadir}/%{name}/txts
-%{_gamesdatadir}/%{name}/worlds
+%{_gamesdatadir}/%{name}/world
+%{_gamesdatadir}/%{name}/shaders
 
 #------------------------------------------------
 
@@ -135,12 +134,11 @@ These are not needed, but may improve fun while playing.
 %build
 sed -i "1 i #include <unistd.h>" src/main.cc
 %cmake  -DCMAKE_BUILD_TYPE="Release" \
-	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DWL_BINDIR="games" \
-	-DWL_INSTALL_PREFIX="/usr" \
-	-DWL_INSTALL_DATADIR="share/games/%{name}" \
-	-DWL_INSTALL_LOCALEDIR="/usr/share/games/%{name}/locale" \
-	-DBoost_USE_STATIC_LIBS=OFF
+	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir} \
+	-DWL_INSTALL_BASEDIR="%{_gamesdatadir}/%{name}" \
+	-DWL_INSTALL_DATADIR="%{_gamesdatadir}/%{name}" \
+	-DBoost_USE_STATIC_LIBS=OFF \
+	-DOPTION_BUILD_WEBSITE_TOOLS=OFF
 
 %make
 
@@ -149,9 +147,9 @@ sed -i "1 i #include <unistd.h>" src/main.cc
 
 #icons
 install -d %{buildroot}{%{_miconsdir},%{_liconsdir}}
-install -m644 pics/wl-ico-16.png -D %{buildroot}%{_miconsdir}/%{name}.png
-install -m644 pics/wl-ico-32.png -D %{buildroot}%{_iconsdir}/%{name}.png
-install -m644 pics/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{name}.png
+install -m644 data/images/logos/wl-ico-16.png -D %{buildroot}%{_miconsdir}/%{name}.png
+install -m644 data/images/logos/wl-ico-32.png -D %{buildroot}%{_iconsdir}/%{name}.png
+install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{name}.png
 
 # .desktop file
 install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
