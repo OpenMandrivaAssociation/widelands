@@ -10,6 +10,7 @@ Url:		http://www.widelands.org/
 Source0:	https://launchpad.net/widelands/build%{bld}/build%{bld}/+download/widelands-build%{bld}-src.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
+Patch1:		widelands-build19-gcc82.patch
 
 BuildRequires:	cmake
 BuildRequires:	ctags
@@ -131,6 +132,7 @@ These are not needed, but may improve fun while playing.
 
 %prep
 %setup -q -n %{name}-build%{bld}-src
+%apply_patches
 
 %build
 sed -i "1 i #include <unistd.h>" src/main.cc
