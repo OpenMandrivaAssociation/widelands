@@ -1,4 +1,4 @@
-%define bld	19
+%define bld	20
 
 Summary:	Settlers II clone
 Name:		widelands
@@ -7,10 +7,10 @@ Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
-Source0:	https://launchpad.net/widelands/build%{bld}/build%{bld}/+download/widelands-build%{bld}-src.tar.bz2
+Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build20.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
-Patch1:		widelands-build19-gcc82.patch
+#Patch1:		widelands-build19-gcc82.patch
 
 BuildRequires:	cmake
 BuildRequires:	ctags
@@ -131,7 +131,7 @@ These are not needed, but may improve fun while playing.
 
 
 %prep
-%setup -q -n %{name}-build%{bld}-src
+%setup -q -n %{name}-build%{bld}
 %apply_patches
 
 %build
