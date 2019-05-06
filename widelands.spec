@@ -137,12 +137,9 @@ These are not needed, but may improve fun while playing.
 
 %build
 sed -i "1 i #include <unistd.h>" src/main.cc
-%cmake  -DCMAKE_BUILD_TYPE="Release" \
-	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir} \
-	-DWL_INSTALL_BASEDIR="%{_gamesdatadir}/%{name}" \
-	-DWL_INSTALL_DATADIR="%{_gamesdatadir}/%{name}" \
-	-DBoost_USE_STATIC_LIBS=OFF \
-	-DOPTION_BUILD_WEBSITE_TOOLS=OFF
+%cmake \
+	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}
+
 
 %make
 
