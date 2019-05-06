@@ -137,7 +137,7 @@ These are not needed, but may improve fun while playing.
 %apply_patches
 
 %build
-sed -i "1 i #include <unistd.h>" src/main.cc
+#sed -i "1 i #include <unistd.h>" src/main.cc
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}
 
