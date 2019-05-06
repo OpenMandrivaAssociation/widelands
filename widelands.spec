@@ -20,6 +20,7 @@ BuildRequires:	optipng
 BuildRequires:	pngrewrite
 BuildRequires:	boost-devel
 BuildRequires:	gettext-devel
+BuildRequires:  optipng
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
@@ -137,7 +138,7 @@ These are not needed, but may improve fun while playing.
 
 %build
 sed -i "1 i #include <unistd.h>" src/main.cc
-%cmake \
+%cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}
 
 
