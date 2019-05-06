@@ -11,6 +11,7 @@ Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-bui
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
 #Patch1:		widelands-build19-gcc82.patch
+Patch2:		widelands-b20-RelWithDebInfo.patch
 
 BuildRequires:	cmake
 BuildRequires:	ctags
