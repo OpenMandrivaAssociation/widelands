@@ -137,6 +137,8 @@ These are not needed, but may improve fun while playing.
 %apply_patches
 
 %build
+export CC=gcc
+export CXX=g++
 #sed -i "1 i #include <unistd.h>" src/main.cc
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}
