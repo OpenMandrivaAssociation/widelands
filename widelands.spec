@@ -13,6 +13,7 @@ Source10:	widelands.rpmlintrc
 #Patch1:		widelands-build19-gcc82.patch
 #Patch2:		widelands-b20-RelWithDebInfo.patch
 
+BuildRequires:	ninja
 BuildRequires:	cmake
 BuildRequires:	ctags
 BuildRequires:	doxygen
