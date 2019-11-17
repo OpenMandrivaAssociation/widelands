@@ -145,13 +145,14 @@ export CXX=g++
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
-	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}
+	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir} \
+	-G Ninja
 
 
-%make
+%ninja_build
 
 %install
-%makeinstall_std -C build
+%ninja_install -C build
 
 #icons
 install -d %{buildroot}{%{_miconsdir},%{_liconsdir}}
