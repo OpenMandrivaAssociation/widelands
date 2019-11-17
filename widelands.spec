@@ -19,6 +19,7 @@ BuildRequires:	doxygen
 BuildRequires:	optipng
 BuildRequires:	pngrewrite
 BuildRequires:	boost-devel
+BuildRequires:  boost-regex-devel
 BuildRequires:	gettext-devel
 BuildRequires:  optipng
 BuildRequires:	jpeg-devel
