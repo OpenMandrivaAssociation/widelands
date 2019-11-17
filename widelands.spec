@@ -146,6 +146,7 @@ export CXX=g++
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
+	-DOPTION_BUILD_WEBSITE_TOOLS=OFF \
 	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir} \
 	-G Ninja
 
