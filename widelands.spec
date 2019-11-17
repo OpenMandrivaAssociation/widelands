@@ -144,6 +144,7 @@ export CXX=g++
 #sed -i "1 i #include <unistd.h>" src/main.cc
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
+	-DOPTION_BUILD_TESTS=OFF \
 	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}
 
 
