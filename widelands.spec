@@ -137,7 +137,7 @@ These are not needed, but may improve fun while playing.
 
 %prep
 %setup -q -n %{name}-build%{bld}
-%apply_patches
+%autopatch -p1
 
 %build
 export CC=gcc
