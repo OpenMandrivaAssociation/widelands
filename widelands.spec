@@ -59,8 +59,10 @@ idea what Widelands is about.
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %defattr(755,root,root,755)
-%{_gamesbindir}/%{name}
-%{_gamesbindir}/wl_render_richtext
+%{_bindir}/widelands
+%{_prefix}/games/widelands/widelands
+%dir %{_prefix}/games/%{name}
+%dir %{_prefix}/games/%{name}/data
 
 #------------------------------------------------
 
@@ -74,7 +76,7 @@ Files to play %{name} in other languages than English.
 
 %files -n %{name}-i18n
 %defattr(644,root,root,755)
-%{_gamesdatadir}/%{name}/locale
+%{_prefix}/games/%{name}/data/locale
 
 #------------------------------------------------
 
@@ -89,19 +91,22 @@ Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 %defattr(644,root,root,755)
-%{_gamesdatadir}/%{name}/COPYING
-%{_gamesdatadir}/%{name}/CREDITS
-%{_gamesdatadir}/%{name}/ChangeLog
-%{_gamesdatadir}/%{name}/VERSION
-%{_gamesdatadir}/%{name}/campaigns
-%{_gamesdatadir}/%{name}/i18n
-%{_gamesdatadir}/%{name}/images
-%{_gamesdatadir}/%{name}/scripting
-%{_gamesdatadir}/%{name}/sound
-%{_gamesdatadir}/%{name}/tribes
-%{_gamesdatadir}/%{name}/txts
-%{_gamesdatadir}/%{name}/world
-%{_gamesdatadir}/%{name}/shaders
+
+%doc %{_prefix}/games/%{name}/COPYING
+%doc %{_prefix}/games/%{name}/CREDITS
+%doc %{_prefix}/games/%{name}/ChangeLog
+%{_prefix}/games/%{name}/VERSION
+%{_prefix}/games/%{name}/data/ai
+%{_prefix}/games/%{name}/data/campaigns
+%{_prefix}/games/%{name}/data/i18n
+%{_prefix}/games/%{name}/data/images
+%{_prefix}/games/%{name}/data/scripting
+%{_prefix}/games/%{name}/data/sound
+%{_prefix}/games/%{name}/data/templates
+%{_prefix}/games/%{name}/data/tribes
+%{_prefix}/games/%{name}/data/txts
+%{_prefix}/games/%{name}/data/world
+%{_prefix}/games/%{name}/data/shaders
 
 #------------------------------------------------
 
@@ -115,7 +120,7 @@ Maps for %{name}.
 
 %files -n %{name}-maps
 %defattr(644,root,root,755)
-%{_gamesdatadir}/%{name}/maps
+%{_prefix}/games/%{name}/data/maps
 
 #------------------------------------------------
 
@@ -130,7 +135,7 @@ These are not needed, but may improve fun while playing.
 
 %files -n %{name}-music
 %defattr(644,root,root,755)
-%{_gamesdatadir}/%{name}/music
+%{_prefix}/games/%{name}/data/music
 
 #------------------------------------------------
 
@@ -140,16 +145,13 @@ These are not needed, but may improve fun while playing.
 %autopatch -p1
 
 %build
-export CC=gcc
-export CXX=g++
-#sed -i "1 i #include <unistd.h>" src/main.cc
+export CXXFLAGS="%{optflags} -std=gnu++17"
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
 	-DOPTION_BUILD_WEBSITE_TOOLS=OFF \
-	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir} \
+	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}/%{name} \
 	-G Ninja
-
 
 %ninja_build
 
@@ -164,3 +166,7 @@ install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{nam
 
 # .desktop file
 install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
+
+# Symlink to PATH
+mkdir -p %{buildroot}%{_bindir}
+ln -s %{_prefix}/games/widelands/widelands %{buildroot}%{_bindir}/
