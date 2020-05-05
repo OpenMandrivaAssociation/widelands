@@ -10,8 +10,7 @@ Url:		http://www.widelands.org/
 Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build20.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
-#Patch1:		widelands-build19-gcc82.patch
-#Patch2:		widelands-b20-RelWithDebInfo.patch
+Patch1:		widelands-20-fix-build-with-boost-1.73.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
