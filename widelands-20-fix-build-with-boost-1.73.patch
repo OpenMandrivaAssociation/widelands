@@ -1,0 +1,410 @@
+diff --git a/src/editor/ui_menus/categorized_item_selection_menu.h b/src/editor/ui_menus/categorized_item_selection_menu.h
+index 13e70182..73536e71 100644
+--- a/src/editor/ui_menus/categorized_item_selection_menu.h
++++ b/src/editor/ui_menus/categorized_item_selection_menu.h
+@@ -124,7 +124,7 @@ CategorizedItemSelectionMenu<DescriptionType, ToolType>::CategorizedItemSelectio
+ 
+ 			UI::Checkbox* cb = create_checkbox(horizontal, descriptions_.get(i));
+ 			cb->set_state(tool_->is_enabled(i));
+-			cb->changedto.connect(boost::bind(&CategorizedItemSelectionMenu::selected, this, i, _1));
++			cb->changedto.connect(boost::bind(&CategorizedItemSelectionMenu::selected, this, i, boost::placeholders::_1));
+ 			checkboxes_[i] = cb;
+ 			horizontal->add(cb);
+ 			horizontal->add_space(kSpacing);
+diff --git a/src/editor/ui_menus/main_menu_load_or_save_map.cc b/src/editor/ui_menus/main_menu_load_or_save_map.cc
+index 1b916df6..2dbf864a 100644
+--- a/src/editor/ui_menus/main_menu_load_or_save_map.cc
++++ b/src/editor/ui_menus/main_menu_load_or_save_map.cc
+@@ -93,10 +93,10 @@ MainMenuLoadOrSaveMap::MainMenuLoadOrSaveMap(EditorInteractive& parent,
+ 	vbox->add(cb_dont_localize_mapnames_, UI::Box::Resizing::kFullSize);
+ 	vbox->set_size(get_inner_w(), buth_);
+ 
+-	table_.set_column_compare(0, boost::bind(&MainMenuLoadOrSaveMap::compare_players, this, _1, _2));
++	table_.set_column_compare(0, boost::bind(&MainMenuLoadOrSaveMap::compare_players, this, boost::placeholders::_1, boost::placeholders::_2));
+ 	table_.set_column_compare(
+-	   1, boost::bind(&MainMenuLoadOrSaveMap::compare_mapnames, this, _1, _2));
+-	table_.set_column_compare(2, boost::bind(&MainMenuLoadOrSaveMap::compare_size, this, _1, _2));
++	   1, boost::bind(&MainMenuLoadOrSaveMap::compare_mapnames, this, boost::placeholders::_1, boost::placeholders::_2));
++	table_.set_column_compare(2, boost::bind(&MainMenuLoadOrSaveMap::compare_size, this, boost::placeholders::_1, boost::placeholders::_2));
+ 
+ 	table_.focus();
+ 	fill_table();
+diff --git a/src/ui_basic/box.cc b/src/ui_basic/box.cc
+index ab69c560..bcc8aa97 100644
+--- a/src/ui_basic/box.cc
++++ b/src/ui_basic/box.cc
+@@ -198,7 +198,7 @@ void Box::layout() {
+ 			// TODO(GunChleoc): Implement styling if we ever use the scrollbar function.
+ 			scrollbar_.reset(new Scrollbar(
+ 			   this, sb_x, sb_y, sb_w, sb_h, UI::PanelStyle::kFsMenu, orientation_ == Horizontal));
+-			scrollbar_->moved.connect(boost::bind(&Box::scrollbar_moved, this, _1));
++			scrollbar_->moved.connect(boost::bind(&Box::scrollbar_moved, this, boost::placeholders::_1));
+ 		} else {
+ 			scrollbar_->set_pos(Vector2i(sb_x, sb_y));
+ 			scrollbar_->set_size(sb_w, sb_h);
+diff --git a/src/ui_basic/listselect.cc b/src/ui_basic/listselect.cc
+index aeddaa53..bb724c89 100644
+--- a/src/ui_basic/listselect.cc
++++ b/src/ui_basic/listselect.cc
+@@ -66,7 +66,7 @@ BaseListselect::BaseListselect(Panel* const parent,
+                           nullptr) {
+ 	set_thinks(false);
+ 
+-	scrollbar_.moved.connect(boost::bind(&BaseListselect::set_scrollpos, this, _1));
++	scrollbar_.moved.connect(boost::bind(&BaseListselect::set_scrollpos, this, boost::placeholders::_1));
+ 
+ 	if (selection_mode_ == ListselectLayout::kShowCheck) {
+ 		check_pic_ = g_gr->images().get("images/ui_basic/list_selected.png");
+diff --git a/src/ui_basic/multilinetextarea.cc b/src/ui_basic/multilinetextarea.cc
+index 4a67f47e..7e8522c9 100644
+--- a/src/ui_basic/multilinetextarea.cc
++++ b/src/ui_basic/multilinetextarea.cc
+@@ -49,7 +49,7 @@ MultilineTextarea::MultilineTextarea(Panel* const parent,
+      scrollbar_(this, get_w() - Scrollbar::kSize, 0, Scrollbar::kSize, h, style, false) {
+ 	set_thinks(false);
+ 
+-	scrollbar_.moved.connect(boost::bind(&MultilineTextarea::scrollpos_changed, this, _1));
++	scrollbar_.moved.connect(boost::bind(&MultilineTextarea::scrollpos_changed, this, boost::placeholders::_1));
+ 
+ 	scrollbar_.set_singlestepsize(text_height());
+ 	scrollbar_.set_steps(1);
+diff --git a/src/ui_basic/table.cc b/src/ui_basic/table.cc
+index 5292efdc..fcf3efa1 100644
+--- a/src/ui_basic/table.cc
++++ b/src/ui_basic/table.cc
+@@ -71,7 +71,7 @@ Table<void*>::Table(Panel* const parent,
+ 	scrollbar_filler_button_->set_visible(false);
+ 	scrollbar_ = new Scrollbar(this, get_w() - Scrollbar::kSize, headerheight_, Scrollbar::kSize,
+ 	                           get_h() - headerheight_, style);
+-	scrollbar_->moved.connect(boost::bind(&Table::set_scrollpos, this, _1));
++	scrollbar_->moved.connect(boost::bind(&Table::set_scrollpos, this, boost::placeholders::_1));
+ 	scrollbar_->set_steps(1);
+ 	scrollbar_->set_singlestepsize(lineheight_);
+ 	scrollbar_->set_pagesize(get_h() - lineheight_);
+@@ -118,7 +118,7 @@ void Table<void*>::add_column(uint32_t const width,
+ 		   boost::bind(&Table::header_button_clicked, boost::ref(*this), columns_.size()));
+ 		c.width = width;
+ 		c.alignment = alignment;
+-		c.compare = boost::bind(&Table<void*>::default_compare_string, this, columns_.size(), _1, _2);
++		c.compare = boost::bind(&Table<void*>::default_compare_string, this, columns_.size(), _1, boost::placeholders::_2);
+ 		columns_.push_back(c);
+ 		if (column_type == TableColumnType::kFlexible) {
+ 			assert(flexible_column_ == std::numeric_limits<size_t>::max());
+@@ -689,7 +689,7 @@ void Table<void*>::sort(const uint32_t lower_bound, uint32_t upper_bound) {
+ 	}
+ 
+ 	std::stable_sort(
+-	   indices.begin(), indices.end(), boost::bind(&Table<void*>::sort_helper, this, _1, _2));
++	   indices.begin(), indices.end(), boost::bind(&Table<void*>::sort_helper, this, boost::placeholders::_1, boost::placeholders::_2));
+ 
+ 	uint32_t newselection = selection_;
+ 	std::set<uint32_t> new_multiselect;
+diff --git a/src/ui_fsmenu/campaign_select.cc b/src/ui_fsmenu/campaign_select.cc
+index 651f9589..c879b818 100644
+--- a/src/ui_fsmenu/campaign_select.cc
++++ b/src/ui_fsmenu/campaign_select.cc
+@@ -103,7 +103,7 @@ FullscreenMenuCampaignSelect::FullscreenMenuCampaignSelect()
+ 	table_.add_column(
+ 	   0, _("Campaign Name"), _("Campaign Name"), UI::Align::kLeft, UI::TableColumnType::kFlexible);
+ 	table_.set_column_compare(
+-	   0, boost::bind(&FullscreenMenuCampaignSelect::compare_difficulty, this, _1, _2));
++	   0, boost::bind(&FullscreenMenuCampaignSelect::compare_difficulty, this, boost::placeholders::_1, boost::placeholders::_2));
+ 	table_.set_sort_column(0);
+ 	table_.focus();
+ 	fill_table();
+diff --git a/src/ui_fsmenu/internet_lobby.cc b/src/ui_fsmenu/internet_lobby.cc
+index 84c31dc4..bffb9a45 100644
+--- a/src/ui_fsmenu/internet_lobby.cc
++++ b/src/ui_fsmenu/internet_lobby.cc
+@@ -148,9 +148,9 @@ FullscreenMenuInternetLobby::FullscreenMenuInternetLobby(char const* const nick,
+ 	clientsonline_list_.add_column(
+ 	   0, _("Game"), "", UI::Align::kLeft, UI::TableColumnType::kFlexible);
+ 	clientsonline_list_.set_column_compare(
+-	   0, boost::bind(&FullscreenMenuInternetLobby::compare_clienttype, this, _1, _2));
++	   0, boost::bind(&FullscreenMenuInternetLobby::compare_clienttype, this, boost::placeholders::_1, boost::placeholders::_2));
+ 	clientsonline_list_.double_clicked.connect(
+-	   boost::bind(&FullscreenMenuInternetLobby::client_doubleclicked, this, _1));
++	   boost::bind(&FullscreenMenuInternetLobby::client_doubleclicked, this, boost::placeholders::_1));
+ 	opengames_list_.selected.connect(
+ 	   boost::bind(&FullscreenMenuInternetLobby::server_selected, this));
+ 	opengames_list_.double_clicked.connect(
+diff --git a/src/ui_fsmenu/mapselect.cc b/src/ui_fsmenu/mapselect.cc
+index 2ababb5a..62cb53b4 100644
+--- a/src/ui_fsmenu/mapselect.cc
++++ b/src/ui_fsmenu/mapselect.cc
+@@ -76,10 +76,10 @@ FullscreenMenuMapSelect::FullscreenMenuMapSelect(GameSettingsProvider* const set
+ 	table_.double_clicked.connect(
+ 	   boost::bind(&FullscreenMenuMapSelect::clicked_ok, boost::ref(*this)));
+ 	table_.set_column_compare(
+-	   0, boost::bind(&FullscreenMenuMapSelect::compare_players, this, _1, _2));
++	   0, boost::bind(&FullscreenMenuMapSelect::compare_players, this, boost::placeholders::_1, boost::placeholders::_2));
+ 	table_.set_column_compare(
+-	   1, boost::bind(&FullscreenMenuMapSelect::compare_mapnames, this, _1, _2));
+-	table_.set_column_compare(2, boost::bind(&FullscreenMenuMapSelect::compare_size, this, _1, _2));
++	   1, boost::bind(&FullscreenMenuMapSelect::compare_mapnames, this, boost::placeholders::_1, boost::placeholders::_2));
++	table_.set_column_compare(2, boost::bind(&FullscreenMenuMapSelect::compare_size, this, boost::placeholders::_1, boost::placeholders::_2));
+ 
+ 	UI::Box* hbox = new UI::Box(&checkboxes_, 0, 0, UI::Box::Horizontal, checkbox_space_, get_w());
+ 
+diff --git a/src/ui_fsmenu/netsetup_lan.cc b/src/ui_fsmenu/netsetup_lan.cc
+index b7476946..059f1fae 100644
+--- a/src/ui_fsmenu/netsetup_lan.cc
++++ b/src/ui_fsmenu/netsetup_lan.cc
+@@ -121,9 +121,9 @@ FullscreenMenuNetSetupLAN::FullscreenMenuNetSetupLAN()
+ 	opengames.add_column(listw_ * 2 / 5, _("Host"));
+ 	opengames.add_column(listw_ * 2 / 5, _("Map"));
+ 	opengames.add_column(listw_ / 5, _("State"));
+-	opengames.selected.connect(boost::bind(&FullscreenMenuNetSetupLAN::game_selected, this, _1));
++	opengames.selected.connect(boost::bind(&FullscreenMenuNetSetupLAN::game_selected, this, boost::placeholders::_1));
+ 	opengames.double_clicked.connect(
+-	   boost::bind(&FullscreenMenuNetSetupLAN::game_doubleclicked, this, _1));
++	   boost::bind(&FullscreenMenuNetSetupLAN::game_doubleclicked, this, boost::placeholders::_1));
+ 	discovery.set_callback(discovery_callback, this);
+ 
+ 	joingame.set_enabled(false);
+diff --git a/src/wui/debugconsole.cc b/src/wui/debugconsole.cc
+index 3cb176ed..93e33357 100644
+--- a/src/wui/debugconsole.cc
++++ b/src/wui/debugconsole.cc
+@@ -37,9 +37,9 @@ struct Console : public ChatProvider, public Handler {
+ 	Handler::HandlerFn default_handler;
+ 
+ 	Console() {
+-		addCommand("help", boost::bind(&Console::cmdHelp, this, _1));
+-		addCommand("ls", boost::bind(&Console::cmdLs, this, _1));
+-		default_handler = boost::bind(&Console::cmdErr, this, _1);
++		addCommand("help", boost::bind(&Console::cmdHelp, this, boost::placeholders::_1));
++		addCommand("ls", boost::bind(&Console::cmdLs, this, boost::placeholders::_1));
++		default_handler = boost::bind(&Console::cmdErr, this, boost::placeholders::_1);
+ 	}
+ 
+ 	~Console() override {
+diff --git a/src/wui/fieldaction.cc b/src/wui/fieldaction.cc
+index faae023c..f00dcf73 100644
+--- a/src/wui/fieldaction.cc
++++ b/src/wui/fieldaction.cc
+@@ -76,9 +76,9 @@ private:
+ 
+ BuildGrid::BuildGrid(UI::Panel* parent, Widelands::Player* plr, int32_t x, int32_t y, int32_t cols)
+    : UI::IconGrid(parent, x, y, kBuildGridCellSize, kBuildGridCellSize, cols), plr_(plr) {
+-	clicked.connect(boost::bind(&BuildGrid::click_slot, this, _1));
+-	mouseout.connect(boost::bind(&BuildGrid::mouseout_slot, this, _1));
+-	mousein.connect(boost::bind(&BuildGrid::mousein_slot, this, _1));
++	clicked.connect(boost::bind(&BuildGrid::click_slot, this, boost::placeholders::_1));
++	mouseout.connect(boost::bind(&BuildGrid::mouseout_slot, this, boost::placeholders::_1));
++	mousein.connect(boost::bind(&BuildGrid::mousein_slot, this, boost::placeholders::_1));
+ }
+ 
+ /*
+@@ -448,12 +448,12 @@ void FieldActionWindow::add_buttons_build(int32_t buildcaps) {
+ 		// Allocate the tab's grid if necessary
+ 		if (!*ppgrid) {
+ 			*ppgrid = new BuildGrid(&tabpanel_, player_, 0, 0, 5);
+-			(*ppgrid)->buildclicked.connect(boost::bind(&FieldActionWindow::act_build, this, _1));
++			(*ppgrid)->buildclicked.connect(boost::bind(&FieldActionWindow::act_build, this, boost::placeholders::_1));
+ 			(*ppgrid)->buildmouseout.connect(
+-			   boost::bind(&FieldActionWindow::building_icon_mouse_out, this, _1));
++			   boost::bind(&FieldActionWindow::building_icon_mouse_out, this, boost::placeholders::_1));
+ 
+ 			(*ppgrid)->buildmousein.connect(
+-			   boost::bind(&FieldActionWindow::building_icon_mouse_in, this, _1));
++			   boost::bind(&FieldActionWindow::building_icon_mouse_in, this, boost::placeholders::_1));
+ 		}
+ 
+ 		// Add it to the grid
+diff --git a/src/wui/game_debug_ui.cc b/src/wui/game_debug_ui.cc
+index c7bb9f39..f1cdf07f 100644
+--- a/src/wui/game_debug_ui.cc
++++ b/src/wui/game_debug_ui.cc
+@@ -226,7 +226,7 @@ FieldDebugWindow::FieldDebugWindow(InteractiveBase& parent, Widelands::Coords co
+ 	assert(coords_.y < map_.get_height());
+ 	assert(&map_[0] <= coords_.field);
+ 	assert(coords_.field < &map_[0] + map_.max_index());
+-	ui_bobs_.selected.connect(boost::bind(&FieldDebugWindow::open_bob, this, _1));
++	ui_bobs_.selected.connect(boost::bind(&FieldDebugWindow::open_bob, this, boost::placeholders::_1));
+ }
+ 
+ /*
+diff --git a/src/wui/game_message_menu.cc b/src/wui/game_message_menu.cc
+index 2a11007b..dbba1fdc 100644
+--- a/src/wui/game_message_menu.cc
++++ b/src/wui/game_message_menu.cc
+@@ -63,8 +63,8 @@ GameMessageMenu::GameMessageMenu(InteractivePlayer& plr, UI::UniqueWindow::Regis
+ 	list = new UI::Table<uintptr_t>(this, kPadding, kButtonSize + 2 * kPadding,
+ 	                                kWindowWidth - 2 * kPadding, kTableHeight, UI::PanelStyle::kWui,
+ 	                                UI::TableRows::kMulti);
+-	list->selected.connect(boost::bind(&GameMessageMenu::selected, this, _1));
+-	list->double_clicked.connect(boost::bind(&GameMessageMenu::double_clicked, this, _1));
++	list->selected.connect(boost::bind(&GameMessageMenu::selected, this, boost::placeholders::_1));
++	list->double_clicked.connect(boost::bind(&GameMessageMenu::double_clicked, this, boost::placeholders::_1));
+ 	list->add_column(kWindowWidth - 2 * kPadding - 60 - 60 - 75, _("Title"));
+ 	list->add_column(60, pgettext("message", "Type"), "", UI::Align::kCenter);
+ 	list->add_column(60, _("Status"), "", UI::Align::kCenter);
+@@ -140,11 +140,11 @@ GameMessageMenu::GameMessageMenu(InteractivePlayer& plr, UI::UniqueWindow::Regis
+ 	if (get_usedefaultpos())
+ 		center_to_parent();
+ 
+-	list->set_column_compare(ColTitle, boost::bind(&GameMessageMenu::compare_title, this, _1, _2));
+-	list->set_column_compare(ColStatus, boost::bind(&GameMessageMenu::compare_status, this, _1, _2));
+-	list->set_column_compare(ColType, boost::bind(&GameMessageMenu::compare_type, this, _1, _2));
++	list->set_column_compare(ColTitle, boost::bind(&GameMessageMenu::compare_title, this, boost::placeholders::_1, boost::placeholders::_2));
++	list->set_column_compare(ColStatus, boost::bind(&GameMessageMenu::compare_status, this, boost::placeholders::_1, boost::placeholders::_2));
++	list->set_column_compare(ColType, boost::bind(&GameMessageMenu::compare_type, this, boost::placeholders::_1, boost::placeholders::_2));
+ 	list->set_column_compare(
+-	   ColTimeSent, boost::bind(&GameMessageMenu::compare_time_sent, this, _1, _2));
++	   ColTimeSent, boost::bind(&GameMessageMenu::compare_time_sent, this, boost::placeholders::_1, boost::placeholders::_2));
+ 
+ 	list->set_sort_column(ColTimeSent);
+ 	list->layout();
+diff --git a/src/wui/game_objectives_menu.cc b/src/wui/game_objectives_menu.cc
+index d073aa62..fdfc2f8e 100644
+--- a/src/wui/game_objectives_menu.cc
++++ b/src/wui/game_objectives_menu.cc
+@@ -50,7 +50,7 @@ GameObjectivesMenu::GameObjectivesMenu(UI::Panel* parent, UI::UniqueWindow::Regi
+                    "",
+                    UI::Align::kLeft,
+                    UI::MultilineTextarea::ScrollMode::kScrollNormalForced) {
+-	list.selected.connect(boost::bind(&GameObjectivesMenu::selected, this, _1));
++	list.selected.connect(boost::bind(&GameObjectivesMenu::selected, this, boost::placeholders::_1));
+ 	if (get_usedefaultpos())
+ 		center_to_parent();
+ }
+diff --git a/src/wui/game_options_sound_menu.cc b/src/wui/game_options_sound_menu.cc
+index e01ac3a7..7a2cc496 100644
+--- a/src/wui/game_options_sound_menu.cc
++++ b/src/wui/game_options_sound_menu.cc
+@@ -97,13 +97,13 @@ GameOptionsSoundMenu::GameOptionsSoundMenu(InteractiveGameBase& gb,
+ 
+ 	//  ready signals
+ 	ingame_music.changedto.connect(
+-	   boost::bind(&GameOptionsSoundMenu::changed_ingame_music, this, _1));
++	   boost::bind(&GameOptionsSoundMenu::changed_ingame_music, this, boost::placeholders::_1));
+ 	ingame_sound.changedto.connect(
+-	   boost::bind(&GameOptionsSoundMenu::changed_ingame_sound, this, _1));
++	   boost::bind(&GameOptionsSoundMenu::changed_ingame_sound, this, boost::placeholders::_1));
+ 	ingame_music_volume.changedto.connect(
+-	   boost::bind(&GameOptionsSoundMenu::music_volume_changed, this, _1));
++	   boost::bind(&GameOptionsSoundMenu::music_volume_changed, this, boost::placeholders::_1));
+ 	ingame_sound_volume.changedto.connect(
+-	   boost::bind(&GameOptionsSoundMenu::sound_volume_changed, this, _1));
++	   boost::bind(&GameOptionsSoundMenu::sound_volume_changed, this, boost::placeholders::_1));
+ 
+ 	if (get_usedefaultpos())
+ 		center_to_parent();
+diff --git a/src/wui/game_summary.cc b/src/wui/game_summary.cc
+index f6d5cadc..0e429524 100644
+--- a/src/wui/game_summary.cc
++++ b/src/wui/game_summary.cc
+@@ -110,7 +110,7 @@ GameSummaryScreen::GameSummaryScreen(InteractiveGameBase* parent, UI::UniqueWind
+ 	// Connections
+ 	continue_button_->sigclicked.connect(boost::bind(&GameSummaryScreen::continue_clicked, this));
+ 	stop_button_->sigclicked.connect(boost::bind(&GameSummaryScreen::stop_clicked, this));
+-	players_table_->selected.connect(boost::bind(&GameSummaryScreen::player_selected, this, _1));
++	players_table_->selected.connect(boost::bind(&GameSummaryScreen::player_selected, this, boost::placeholders::_1));
+ 
+ 	// Window
+ 	center_to_parent();
+diff --git a/src/wui/general_statistics_menu.cc b/src/wui/general_statistics_menu.cc
+index f6ecfe12..6d28d6b9 100644
+--- a/src/wui/general_statistics_menu.cc
++++ b/src/wui/general_statistics_menu.cc
+@@ -194,7 +194,7 @@ GeneralStatisticsMenu::GeneralStatisticsMenu(InteractiveGameBase& parent,
+ 	}
+ 
+ 	radiogroup_.set_state(selected_information_);
+-	radiogroup_.changedto.connect(boost::bind(&GeneralStatisticsMenu::radiogroup_changed, this, _1));
++	radiogroup_.changedto.connect(boost::bind(&GeneralStatisticsMenu::radiogroup_changed, this, boost::placeholders::_1));
+ 
+ 	box_.add(hbox2, UI::Box::Resizing::kFullSize);
+ 
+diff --git a/src/wui/inputqueuedisplay.cc b/src/wui/inputqueuedisplay.cc
+index 4a773f12..57c96d3f 100644
+--- a/src/wui/inputqueuedisplay.cc
++++ b/src/wui/inputqueuedisplay.cc
+@@ -217,7 +217,7 @@ void InputQueueDisplay::update_priority_buttons() {
+ 	}
+ 
+ 	priority_radiogroup_->changedto.connect(
+-	   boost::bind(&InputQueueDisplay::radiogroup_changed, this, _1));
++	   boost::bind(&InputQueueDisplay::radiogroup_changed, this, boost::placeholders::_1));
+ 	priority_radiogroup_->clicked.connect(boost::bind(&InputQueueDisplay::radiogroup_clicked, this));
+ 
+ 	bool const can_act = igb_.can_act(building_.owner().player_number());
+diff --git a/src/wui/interactive_base.cc b/src/wui/interactive_base.cc
+index 0413dcbb..ce6fa268 100644
+--- a/src/wui/interactive_base.cc
++++ b/src/wui/interactive_base.cc
+@@ -183,8 +183,8 @@ InteractiveBase::InteractiveBase(EditorGameBase& the_egbase, Section& global_s)
+ 	//  funny results.
+ 	unset_sel_picture();
+ 
+-	setDefaultCommand(boost::bind(&InteractiveBase::cmd_lua, this, _1));
+-	addCommand("mapobject", boost::bind(&InteractiveBase::cmd_map_object, this, _1));
++	setDefaultCommand(boost::bind(&InteractiveBase::cmd_lua, this, boost::placeholders::_1));
++	addCommand("mapobject", boost::bind(&InteractiveBase::cmd_map_object, this, boost::placeholders::_1));
+ }
+ 
+ InteractiveBase::~InteractiveBase() {
+diff --git a/src/wui/interactive_player.cc b/src/wui/interactive_player.cc
+index 9d145f4d..4bf531f0 100644
+--- a/src/wui/interactive_player.cc
++++ b/src/wui/interactive_player.cc
+@@ -221,7 +221,7 @@ InteractivePlayer::InteractivePlayer(Widelands::Game& g,
+ 	main_windows_.stock.open_window = [this] { new StockMenu(*this, main_windows_.stock); };
+ 
+ #ifndef NDEBUG  //  only in debug builds
+-	addCommand("switchplayer", boost::bind(&InteractivePlayer::cmdSwitchPlayer, this, _1));
++	addCommand("switchplayer", boost::bind(&InteractivePlayer::cmdSwitchPlayer, this, boost::placeholders::_1));
+ #endif
+ }
+ 
+diff --git a/src/wui/load_or_save_game.cc b/src/wui/load_or_save_game.cc
+index 1a1e9181..709dc223 100644
+--- a/src/wui/load_or_save_game.cc
++++ b/src/wui/load_or_save_game.cc
+@@ -126,7 +126,7 @@ LoadOrSaveGame::LoadOrSaveGame(UI::Panel* parent,
+ 	                    "or the map’s name followed by the last objective achieved."),
+ 	                  UI::Align::kLeft, UI::TableColumnType::kFlexible);
+ 	table_.set_column_compare(
+-	   0, boost::bind(&LoadOrSaveGame::compare_date_descending, this, _1, _2));
++	   0, boost::bind(&LoadOrSaveGame::compare_date_descending, this, boost::placeholders::_1, boost::placeholders::_2));
+ 	table_.set_sort_column(0);
+ 	fill_table();
+ 
+diff --git a/src/wui/playerdescrgroup.cc b/src/wui/playerdescrgroup.cc
+index 640dbd66..a245a630 100644
+--- a/src/wui/playerdescrgroup.cc
++++ b/src/wui/playerdescrgroup.cc
+@@ -65,7 +65,7 @@ PlayerDescriptionGroup::PlayerDescriptionGroup(UI::Panel* const parent,
+ 	d->plr_name = new UI::Textarea(this, xplrname, 0, xplayertype - xplrname, h);
+ 	d->btnEnablePlayer = new UI::Checkbox(this, Vector2i(xplayertype - 23, 0), "");
+ 	d->btnEnablePlayer->changedto.connect(
+-	   boost::bind(&PlayerDescriptionGroup::enable_player, this, _1));
++	   boost::bind(&PlayerDescriptionGroup::enable_player, this, boost::placeholders::_1));
+ 	d->btnPlayerType =
+ 	   new UI::Button(this, "player_type", xplayertype, 0, xplayertribe - xplayertype - 2, h / 2,
+ 	                  UI::ButtonStyle::kFsMenuSecondary, "");
+diff --git a/src/wui/soldierlist.cc b/src/wui/soldierlist.cc
+index 6e0602f8..eaf2ea7a 100644
+--- a/src/wui/soldierlist.cc
++++ b/src/wui/soldierlist.cc
+@@ -375,8 +375,8 @@ SoldierList::SoldierList(UI::Panel& parent, InteractiveGameBase& igb, Widelands:
+ 
+ 	add(&infotext_, UI::Box::Resizing::kAlign, UI::Align::kCenter);
+ 
+-	soldierpanel_.set_mouseover(boost::bind(&SoldierList::mouseover, this, _1));
+-	soldierpanel_.set_click(boost::bind(&SoldierList::eject, this, _1));
++	soldierpanel_.set_mouseover(boost::bind(&SoldierList::mouseover, this, boost::placeholders::_1));
++	soldierpanel_.set_click(boost::bind(&SoldierList::eject, this, boost::placeholders::_1));
+ 
+ 	// We don't want translators to translate this twice, so it's a bit involved.
+ 	int w = UI::g_fh
+@@ -414,7 +414,7 @@ SoldierList::SoldierList(UI::Panel& parent, InteractiveGameBase& igb, Widelands:
+ 		}
+ 		if (can_act) {
+ 			soldier_preference_.changedto.connect(
+-			   boost::bind(&SoldierList::set_soldier_preference, this, _1));
++			   boost::bind(&SoldierList::set_soldier_preference, this, boost::placeholders::_1));
+ 		} else {
+ 			soldier_preference_.set_enabled(false);
+ 		}
