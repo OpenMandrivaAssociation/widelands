@@ -25,6 +25,7 @@ BuildRequires:  boost-regex-devel
 BuildRequires:	gettext-devel
 BuildRequires:  optipng
 BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
