@@ -3,7 +3,7 @@
 Summary:	Settlers II clone
 Name:		widelands
 Version:	b%{bld}
-Release:	2
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
@@ -11,7 +11,6 @@ Source0:	https://github.com/widelands/widelands/archive/build%{bld}/%{name}-buil
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
-#Patch1:		widelands-20-fix-build-with-boost-1.73.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
@@ -56,14 +55,18 @@ idea what Widelands is about.
 %defattr(644,root,root,755)
 %doc ChangeLog COPYING
 %{_datadir}/applications/%{name}.desktop
+%{_prefix}/games/share/applications/org.widelands.Widelands.desktop
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
+%{_prefix}/games/share/icons/hicolor/*x*/apps/org.widelands.Widelands.png
 %defattr(755,root,root,755)
 %{_bindir}/widelands
 %{_prefix}/games/widelands/widelands
 %dir %{_prefix}/games/%{name}
 %dir %{_prefix}/games/%{name}/data
+%{_prefix}/games/share/man/man6/widelands.*
+%{_prefix}/games/share/metainfo/org.widelands.Widelands.appdata.xml
 
 #------------------------------------------------
 
