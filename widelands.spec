@@ -11,7 +11,7 @@ Source0:	https://github.com/widelands/widelands/archive/build%{bld}/%{name}-buil
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
-Patch1:		widelands-20-fix-build-with-boost-1.73.patch
+#Patch1:		widelands-20-fix-build-with-boost-1.73.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
