@@ -1,4 +1,4 @@
-%define bld	20
+%define bld	21
 
 Summary:	Settlers II clone
 Name:		widelands
@@ -7,7 +7,8 @@ Release:	2
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
-Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build20.tar.bz2
+Source0:	https://github.com/widelands/widelands/archive/build%{bld}/%{name}-build%{bld}.tar.gz
+#Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
 Patch1:		widelands-20-fix-build-with-boost-1.73.patch
