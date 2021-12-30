@@ -9,6 +9,7 @@ Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
+Patch0:		widelands-1.0-libstdc++-11-missing-include.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
@@ -144,8 +145,7 @@ These are not needed, but may improve fun while playing.
 
 
 %prep
-%setup -q -n %{name}-%{version}
-%autopatch -p1
+%autosetup -p1
 
 %build
 export CXXFLAGS="%{optflags} -std=gnu++17"

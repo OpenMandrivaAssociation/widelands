@@ -1,0 +1,11 @@
+diff -up widelands-1.0/src/network/bufferedconnection.h.omv~ widelands-1.0/src/network/bufferedconnection.h
+--- widelands-1.0/src/network/bufferedconnection.h.omv~	2021-12-30 04:46:53.539222961 +0100
++++ widelands-1.0/src/network/bufferedconnection.h	2021-12-30 04:46:59.219300780 +0100
+@@ -23,6 +23,7 @@
+ #include <memory>
+ #include <mutex>
+ #include <thread>
++#include <map>
+ 
+ #include "network/network.h"
+ #include "network/relay_protocol.h"
