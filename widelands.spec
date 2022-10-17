@@ -145,7 +145,7 @@ These are not needed, but may improve fun while playing.
 
 
 %prep
-%autosetup %{name}-%{version}-rc1 -p1
+%autosetup -n %{name}-%{version}-rc1 -p1
 
 %build
 export CXXFLAGS="%{optflags} -std=gnu++17"
