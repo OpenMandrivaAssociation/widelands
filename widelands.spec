@@ -1,11 +1,11 @@
 Summary:	Settlers II open source clone
 Name:		widelands
-Version:	1.0
-Release:	2
+Version:	1.1
+Release:	0.rc1.1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
-Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{name}-%{version}-rc1.tar.gz
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
@@ -145,7 +145,7 @@ These are not needed, but may improve fun while playing.
 
 
 %prep
-%autosetup -p1
+%autosetup %{name}-%{version}-rc1 -p1
 
 %build
 export CXXFLAGS="%{optflags} -std=gnu++17"
