@@ -23,6 +23,7 @@ BuildRequires:  boost-regex-devel
 BuildRequires:	gettext-devel
 BuildRequires:  optipng
 BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(asio)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
