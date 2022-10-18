@@ -153,6 +153,8 @@ These are not needed, but may improve fun while playing.
 %autosetup -n %{name}-%{version}-rc1 -p1
 
 %build
+export CC=gcc
+export CXX=g++
 export CXXFLAGS="%{optflags} -std=gnu++17"
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
