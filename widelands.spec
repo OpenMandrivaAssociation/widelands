@@ -18,6 +18,7 @@ BuildRequires:	ctags
 BuildRequires:	doxygen
 BuildRequires:	optipng
 BuildRequires:	pngrewrite
+BuildRequires:	atomic-devel
 BuildRequires:	boost-devel
 BuildRequires:  boost-static-devel
 BuildRequires:  boost-regex-devel
