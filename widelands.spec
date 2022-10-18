@@ -60,18 +60,18 @@ idea what Widelands is about.
 %defattr(644,root,root,755)
 %doc ChangeLog COPYING
 %{_datadir}/applications/%{name}.desktop
-#{_prefix}/games/share/applications/org.widelands.Widelands.desktop
+%{_prefix}/games/widelands/games/widelands
+%{_prefix}/games/widelands/share/applications/org.widelands.Widelands.desktop
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-#{_prefix}/games/share/icons/hicolor/*x*/apps/org.widelands.Widelands.png
+%{_prefix}/games/widelands/share/icons/hicolor/*x*/apps/org.widelands.Widelands.png
 %defattr(755,root,root,755)
 %{_bindir}/widelands
-#{_prefix}/games/widelands/widelands
 %dir %{_prefix}/games/%{name}
 %dir %{_prefix}/games/%{name}/data
-#{_prefix}/games/share/man/man6/widelands.*
-#{_prefix}/games/share/metainfo/org.widelands.Widelands.appdata.xml
+%{_prefix}/games/widelands/share/man/man6/widelands.6
+%{_prefix}/games/widelands/share/metainfo/org.widelands.Widelands.appdata.xml
 
 #------------------------------------------------
 
@@ -116,6 +116,8 @@ Without these files you will not be able to play.
 %{_prefix}/games/%{name}/data/txts
 %{_prefix}/games/%{name}/data/world
 %{_prefix}/games/%{name}/data/shaders
+%{_prefix}/games/%{name}/data/datadirversion
+
 
 #------------------------------------------------
 
