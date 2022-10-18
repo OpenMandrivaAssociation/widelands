@@ -21,6 +21,7 @@ BuildRequires:	boost-devel
 BuildRequires:  boost-static-devel
 BuildRequires:  boost-regex-devel
 BuildRequires:	gettext-devel
+BuildRequires:	gtk-update-icon-cache
 BuildRequires:  optipng
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(asio)
@@ -33,6 +34,7 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lua)
+BuildRequires:	pkgconfig(minizip)
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(SDL2_gfx)
 BuildRequires:	pkgconfig(SDL2_image)
@@ -149,8 +151,6 @@ These are not needed, but may improve fun while playing.
 %autosetup -n %{name}-%{version}-rc1 -p1
 
 %build
-export CC=gcc
-export CXX=g++
 export CXXFLAGS="%{optflags} -std=gnu++17"
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
