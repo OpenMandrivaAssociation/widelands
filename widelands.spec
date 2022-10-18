@@ -10,6 +10,7 @@ Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
 Patch0:		widelands-1.0-libstdc++-11-missing-include.patch
+Patch1:		https://patch-diff.githubusercontent.com/raw/widelands/widelands/pull/5615.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
