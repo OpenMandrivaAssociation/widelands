@@ -61,7 +61,7 @@ idea what Widelands is about.
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-%{_bindir}/widelands
+#{_bindir}/widelands
 
 #------------------------------------------------
 
