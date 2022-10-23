@@ -56,21 +56,12 @@ If you know Settlers I & II™ (© Bluebyte), you might already have a rough
 idea what Widelands is about.
 
 %files
-%defattr(644,root,root,755)
 %doc ChangeLog COPYING
 %{_datadir}/applications/%{name}.desktop
-%{_prefix}/games/widelands/games/widelands
-%{_prefix}/games/widelands/share/applications/org.widelands.Widelands.desktop
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-%{_prefix}/games/widelands/share/icons/hicolor/*x*/apps/org.widelands.Widelands.png
-%defattr(755,root,root,755)
 %{_bindir}/widelands
-%dir %{_prefix}/games/%{name}
-%dir %{_prefix}/games/%{name}/data
-%{_prefix}/games/widelands/share/man/man6/widelands.6
-%{_prefix}/games/widelands/share/metainfo/org.widelands.Widelands.appdata.xml
 
 #------------------------------------------------
 
@@ -83,8 +74,7 @@ Requires:	%{name} = %{version}
 Files to play %{name} in other languages than English.
 
 %files -n %{name}-i18n
-%defattr(644,root,root,755)
-%{_prefix}/games/%{name}/data/locale
+%{_datadir}/%{name}/data/locale
 
 #------------------------------------------------
 
@@ -98,24 +88,23 @@ Basic data set used by %{name}.
 Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
-%defattr(644,root,root,755)
 
-%doc %{_prefix}/games/%{name}/COPYING
-%doc %{_prefix}/games/%{name}/CREDITS
-%doc %{_prefix}/games/%{name}/ChangeLog
-%{_prefix}/games/%{name}/VERSION
-%{_prefix}/games/%{name}/data/ai
-%{_prefix}/games/%{name}/data/campaigns
-%{_prefix}/games/%{name}/data/i18n
-%{_prefix}/games/%{name}/data/images
-%{_prefix}/games/%{name}/data/scripting
-%{_prefix}/games/%{name}/data/sound
-%{_prefix}/games/%{name}/data/templates
-%{_prefix}/games/%{name}/data/tribes
-%{_prefix}/games/%{name}/data/txts
-%{_prefix}/games/%{name}/data/world
-%{_prefix}/games/%{name}/data/shaders
-%{_prefix}/games/%{name}/data/datadirversion
+%doc %{_datadir}/%{name}/COPYING
+%doc %{_datadir}/%{name}/CREDITS
+%doc %{_datadir}/%{name}/ChangeLog
+%{_datadir}/%{name}/VERSION
+%{_datadir}/%{name}/data/ai
+%{_datadir}/%{name}/data/campaigns
+%{_datadir}/%{name}/data/i18n
+%{_datadir}/%{name}/data/images
+%{_datadir}/%{name}/data/scripting
+%{_datadir}/%{name}/data/sound
+%{_datadir}/%{name}/data/templates
+%{_datadir}/%{name}/data/tribes
+%{_datadir}/%{name}/data/txts
+%{_datadir}/%{name}/data/world
+%{_datadir}/%{name}/data/shaders
+%{_datadir}/%{name}/data/datadirversion
 
 
 #------------------------------------------------
@@ -129,8 +118,7 @@ Requires:	%{name} = %{version}
 Maps for %{name}.
 
 %files -n %{name}-maps
-%defattr(644,root,root,755)
-%{_prefix}/games/%{name}/data/maps
+%{_datadir}/%{name}/data/maps
 
 #------------------------------------------------
 
@@ -144,8 +132,7 @@ Music files for %{name}.
 These are not needed, but may improve fun while playing.
 
 %files -n %{name}-music
-%defattr(644,root,root,755)
-%{_prefix}/games/%{name}/data/music
+%{_datadir}/%{name}/data/music
 
 #------------------------------------------------
 
@@ -178,5 +165,5 @@ install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{nam
 install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 # Symlink to PATH
-mkdir -p %{buildroot}%{_bindir}
-ln -s %{_prefix}/games/widelands/widelands %{buildroot}%{_bindir}/
+#mkdir -p %{buildroot}%{_bindir}
+#ln -s %{_prefix}/games/widelands/widelands %{buildroot}%{_bindir}/
