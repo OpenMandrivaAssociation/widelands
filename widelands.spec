@@ -89,22 +89,22 @@ Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 
-%doc %{_datadir}/%{name}/COPYING
-%doc %{_datadir}/%{name}/CREDITS
-%doc %{_datadir}/%{name}/ChangeLog
-%{_datadir}/%{name}/VERSION
-%{_datadir}/%{name}/data/ai
-%{_datadir}/%{name}/data/campaigns
-%{_datadir}/%{name}/data/i18n
-%{_datadir}/%{name}/data/images
-%{_datadir}/%{name}/data/scripting
-%{_datadir}/%{name}/data/sound
-%{_datadir}/%{name}/data/templates
-%{_datadir}/%{name}/data/tribes
-%{_datadir}/%{name}/data/txts
-%{_datadir}/%{name}/data/world
-%{_datadir}/%{name}/data/shaders
-%{_datadir}/%{name}/data/datadirversion
+#doc %{_datadir}/%{name}/COPYING
+#doc %{_datadir}/%{name}/CREDITS
+#doc %{_datadir}/%{name}/ChangeLog
+#{_datadir}/%{name}/VERSION
+#{_datadir}/%{name}/data/ai
+#{_datadir}/%{name}/data/campaigns
+#{_datadir}/%{name}/data/i18n
+#{_datadir}/%{name}/data/images
+#{_datadir}/%{name}/data/scripting
+#{_datadir}/%{name}/data/sound
+#{_datadir}/%{name}/data/templates
+#{_datadir}/%{name}/data/tribes
+#{_datadir}/%{name}/data/txts
+#{_datadir}/%{name}/data/world
+#{_datadir}/%{name}/data/shaders
+#{_datadir}/%{name}/data/datadirversion
 
 
 #------------------------------------------------
@@ -118,7 +118,7 @@ Requires:	%{name} = %{version}
 Maps for %{name}.
 
 %files -n %{name}-maps
-%{_datadir}/%{name}/data/maps
+#{_datadir}/%{name}/data/maps
 
 #------------------------------------------------
 
@@ -132,7 +132,7 @@ Music files for %{name}.
 These are not needed, but may improve fun while playing.
 
 %files -n %{name}-music
-%{_datadir}/%{name}/data/music
+#{_datadir}/%{name}/data/music
 
 #------------------------------------------------
 
