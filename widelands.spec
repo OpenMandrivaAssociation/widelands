@@ -148,6 +148,9 @@ export CXXFLAGS="%{optflags} -std=gnu++17"
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
 	-DOPTION_BUILD_WEBSITE_TOOLS=OFF \
+	-DWL_INSTALL_BASEDIR="${EPREFIX}"/usr/share/doc/ \
+	-DWL_INSTALL_BINDIR="${EPREFIX}"/usr/bin/ \
+	-DWL_INSTALL_DATADIR="${EPREFIX}"/usr/share/ \
 	-G Ninja
 
 %ninja_build
