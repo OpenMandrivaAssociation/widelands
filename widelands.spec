@@ -1,16 +1,15 @@
 Summary:	Settlers II open source clone
 Name:		widelands
 Version:	1.1
-Release:	0.rc1.1
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
-Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{name}-%{version}-rc1.tar.gz
+Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{name}-%{version}.tar.gz
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
 Patch0:		widelands-1.0-libstdc++-11-missing-include.patch
-Patch1:		https://patch-diff.githubusercontent.com/raw/widelands/widelands/pull/5615.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
@@ -152,7 +151,7 @@ These are not needed, but may improve fun while playing.
 
 
 %prep
-%autosetup -n %{name}-%{version}-rc1 -p1
+%autosetup -n %{name}-%{version} -p1
 
 %build
 export CC=gcc
@@ -162,7 +161,6 @@ export CXXFLAGS="%{optflags} -std=gnu++17"
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
 	-DOPTION_BUILD_WEBSITE_TOOLS=OFF \
-	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}/%{name} \
 	-G Ninja
 
 %ninja_build
