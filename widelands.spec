@@ -90,10 +90,10 @@ Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 
-%doc %{_datadir}/%{name}/COPYING
-%doc %{_datadir}/%{name}/CREDITS
-%doc %{_datadir}/%{name}/ChangeLog
-%doc %{_datadir}/%{name}/VERSION
+#doc %{_datadir}/%{name}/COPYING
+#doc %{_datadir}/%{name}/CREDITS
+#doc %{_datadir}/%{name}/ChangeLog
+#doc %{_datadir}/%{name}/VERSION
 %{_datadir}/%{name}/ai/
 %{_datadir}/%{name}/campaigns/
 %{_datadir}/%{name}/i18n/
