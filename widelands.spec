@@ -1,7 +1,7 @@
 Summary:	Settlers II open source clone
 Name:		widelands
-Version:	1.0
-Release:	2
+Version:	1.1
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		http://www.widelands.org/
@@ -17,12 +17,15 @@ BuildRequires:	ctags
 BuildRequires:	doxygen
 BuildRequires:	optipng
 BuildRequires:	pngrewrite
+BuildRequires:	atomic-devel
 BuildRequires:	boost-devel
 BuildRequires:  boost-static-devel
 BuildRequires:  boost-regex-devel
 BuildRequires:	gettext-devel
+BuildRequires:	gtk-update-icon-cache
 BuildRequires:  optipng
 BuildRequires:	jpeg-devel
+BuildRequires:	pkgconfig(asio)
 BuildRequires:	pkgconfig(dbus-1)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
@@ -32,6 +35,7 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lua)
+#BuildRequires:	pkgconfig(minizip)
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(SDL2_gfx)
 BuildRequires:	pkgconfig(SDL2_image)
@@ -52,21 +56,15 @@ If you know Settlers I & II™ (© Bluebyte), you might already have a rough
 idea what Widelands is about.
 
 %files
-%defattr(644,root,root,755)
 %doc ChangeLog COPYING
-%{_datadir}/applications/%{name}.desktop
-%{_prefix}/games/share/applications/org.widelands.Widelands.desktop
+%{_datadir}/applications/org.widelands.Widelands.desktop
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-%{_prefix}/games/share/icons/hicolor/*x*/apps/org.widelands.Widelands.png
-%defattr(755,root,root,755)
+%{_iconsdir}/hicolor/*x*/apps/org.widelands.Widelands.png
 %{_bindir}/widelands
-%{_prefix}/games/widelands/widelands
-%dir %{_prefix}/games/%{name}
-%dir %{_prefix}/games/%{name}/data
-%{_prefix}/games/share/man/man6/widelands.*
-%{_prefix}/games/share/metainfo/org.widelands.Widelands.appdata.xml
+%{_mandir}/man6/widelands.6.*
+%{_datadir}/metainfo/org.widelands.Widelands.appdata.xml
 
 #------------------------------------------------
 
@@ -79,8 +77,7 @@ Requires:	%{name} = %{version}
 Files to play %{name} in other languages than English.
 
 %files -n %{name}-i18n
-%defattr(644,root,root,755)
-%{_prefix}/games/%{name}/data/locale
+%{_datadir}/%{name}/locale*
 
 #------------------------------------------------
 
@@ -94,23 +91,22 @@ Basic data set used by %{name}.
 Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
-%defattr(644,root,root,755)
 
-%doc %{_prefix}/games/%{name}/COPYING
-%doc %{_prefix}/games/%{name}/CREDITS
-%doc %{_prefix}/games/%{name}/ChangeLog
-%{_prefix}/games/%{name}/VERSION
-%{_prefix}/games/%{name}/data/ai
-%{_prefix}/games/%{name}/data/campaigns
-%{_prefix}/games/%{name}/data/i18n
-%{_prefix}/games/%{name}/data/images
-%{_prefix}/games/%{name}/data/scripting
-%{_prefix}/games/%{name}/data/sound
-%{_prefix}/games/%{name}/data/templates
-%{_prefix}/games/%{name}/data/tribes
-%{_prefix}/games/%{name}/data/txts
-%{_prefix}/games/%{name}/data/world
-%{_prefix}/games/%{name}/data/shaders
+%doc %{_datadir}/doc/%{name}/CREDITS
+%doc %{_datadir}/doc/%{name}/VERSION
+%{_datadir}/%{name}/ai/
+%{_datadir}/%{name}/campaigns/
+%{_datadir}/%{name}/i18n/
+%{_datadir}/%{name}/images/
+%{_datadir}/%{name}/scripting/
+%{_datadir}/%{name}/sound/
+%{_datadir}/%{name}/templates/
+%{_datadir}/%{name}/tribes/
+%{_datadir}/%{name}/txts/
+%{_datadir}/%{name}/world/
+%{_datadir}/%{name}/shaders/
+%{_datadir}/%{name}/datadirversion
+
 
 #------------------------------------------------
 
@@ -123,8 +119,7 @@ Requires:	%{name} = %{version}
 Maps for %{name}.
 
 %files -n %{name}-maps
-%defattr(644,root,root,755)
-%{_prefix}/games/%{name}/data/maps
+%{_datadir}/%{name}/maps/
 
 #------------------------------------------------
 
@@ -138,22 +133,25 @@ Music files for %{name}.
 These are not needed, but may improve fun while playing.
 
 %files -n %{name}-music
-%defattr(644,root,root,755)
-%{_prefix}/games/%{name}/data/music
+%{_datadir}/%{name}/music/
 
 #------------------------------------------------
 
 
 %prep
-%autosetup -p1
+%autosetup -n %{name}-%{version} -p1
 
 %build
+export CC=gcc
+export CXX=g++
 export CXXFLAGS="%{optflags} -std=gnu++17"
 %cmake -DCMAKE_BUILD_TYPE="Release" \
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
 	-DOPTION_BUILD_WEBSITE_TOOLS=OFF \
-	-DCMAKE_INSTALL_PREFIX=%{_gamesbindir}/%{name} \
+	-DWL_INSTALL_BASEDIR="${EPREFIX}"/usr/share/doc/%{name}/ \
+	-DWL_INSTALL_BINDIR="${EPREFIX}"/usr/bin/ \
+	-DWL_INSTALL_DATADIR="${EPREFIX}"/usr/share/%{name}/ \
 	-G Ninja
 
 %ninja_build
@@ -168,8 +166,8 @@ install -m644 data/images/logos/wl-ico-32.png -D %{buildroot}%{_iconsdir}/%{name
 install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{name}.png
 
 # .desktop file
-install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
+#install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 # Symlink to PATH
-mkdir -p %{buildroot}%{_bindir}
-ln -s %{_prefix}/games/widelands/widelands %{buildroot}%{_bindir}/
+#mkdir -p %{buildroot}%{_bindir}
+#ln -s %{_prefix}/games/widelands/widelands %{buildroot}%{_bindir}/
