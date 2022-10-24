@@ -61,7 +61,7 @@ idea what Widelands is about.
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-%{_liconsdir}/icolor/*x*/apps/org.widelands.Widelands.png
+%{_iconsdir}/icolor/*x*/apps/org.widelands.Widelands.png
 %{_bindir}/widelands
 %{_mandir}/man6/widelands.6.*
 %{_datadir}/metainfo/org.widelands.Widelands.appdata.xml
