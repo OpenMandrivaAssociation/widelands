@@ -57,11 +57,12 @@ idea what Widelands is about.
 
 %files
 %doc ChangeLog COPYING
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/org.widelands.Widelands.desktop
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
-#{_bindir}/widelands
+%{_bindir}/widelands
+%{_mandri}/man6/widelands.6.*
 
 #------------------------------------------------
 
@@ -74,7 +75,7 @@ Requires:	%{name} = %{version}
 Files to play %{name} in other languages than English.
 
 %files -n %{name}-i18n
-#{_datadir}/%{name}/data/locale
+%{_datadir}/%{name}/locale*
 
 #------------------------------------------------
 
@@ -89,22 +90,22 @@ Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 
-#doc %{_datadir}/%{name}/COPYING
-#doc %{_datadir}/%{name}/CREDITS
-#doc %{_datadir}/%{name}/ChangeLog
-#{_datadir}/%{name}/VERSION
-#{_datadir}/%{name}/data/ai
-#{_datadir}/%{name}/data/campaigns
-#{_datadir}/%{name}/data/i18n
-#{_datadir}/%{name}/data/images
-#{_datadir}/%{name}/data/scripting
-#{_datadir}/%{name}/data/sound
-#{_datadir}/%{name}/data/templates
-#{_datadir}/%{name}/data/tribes
-#{_datadir}/%{name}/data/txts
-#{_datadir}/%{name}/data/world
-#{_datadir}/%{name}/data/shaders
-#{_datadir}/%{name}/data/datadirversion
+%doc %{_datadir}/%{name}/COPYING
+%doc %{_datadir}/%{name}/CREDITS
+%doc %{_datadir}/%{name}/ChangeLog
+%doc %{_datadir}/%{name}/VERSION
+%{_datadir}/%{name}/ai/
+%{_datadir}/%{name}/campaigns/
+%{_datadir}/%{name}/i18n/
+%{_datadir}/%{name}/images/
+%{_datadir}/%{name}/scripting/
+%{_datadir}/%{name}/sound/
+%{_datadir}/%{name}/templates/
+%{_datadir}/%{name}/tribes/
+%{_datadir}/%{name}/txts/
+%{_datadir}/%{name}/world/
+%{_datadir}/%{name}/shaders/
+%{_datadir}/%{name}/datadirversion
 
 
 #------------------------------------------------
@@ -118,7 +119,7 @@ Requires:	%{name} = %{version}
 Maps for %{name}.
 
 %files -n %{name}-maps
-#{_datadir}/%{name}/data/maps
+%{_datadir}/%{name}/maps/
 
 #------------------------------------------------
 
@@ -132,7 +133,7 @@ Music files for %{name}.
 These are not needed, but may improve fun while playing.
 
 %files -n %{name}-music
-#{_datadir}/%{name}/data/music
+%{_datadir}/%{name}/music/
 
 #------------------------------------------------
 
@@ -148,9 +149,9 @@ export CXXFLAGS="%{optflags} -std=gnu++17"
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DOPTION_BUILD_TESTS=OFF \
 	-DOPTION_BUILD_WEBSITE_TOOLS=OFF \
-	-DWL_INSTALL_BASEDIR="${EPREFIX}"/usr/share/doc/ \
+	-DWL_INSTALL_BASEDIR="${EPREFIX}"/usr/share/doc/%{name}/ \
 	-DWL_INSTALL_BINDIR="${EPREFIX}"/usr/bin/ \
-	-DWL_INSTALL_DATADIR="${EPREFIX}"/usr/share/ \
+	-DWL_INSTALL_DATADIR="${EPREFIX}"/usr/share/%{name}/ \
 	-G Ninja
 
 %ninja_build
@@ -165,7 +166,7 @@ install -m644 data/images/logos/wl-ico-32.png -D %{buildroot}%{_iconsdir}/%{name
 install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{name}.png
 
 # .desktop file
-install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
+#install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 # Symlink to PATH
 #mkdir -p %{buildroot}%{_bindir}
