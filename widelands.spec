@@ -62,7 +62,7 @@ idea what Widelands is about.
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_bindir}/widelands
-%{_mandri}/man6/widelands.6.*
+%{_mandir}/man6/widelands.6.*
 
 #------------------------------------------------
 
