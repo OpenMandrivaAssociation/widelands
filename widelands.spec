@@ -61,8 +61,10 @@ idea what Widelands is about.
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
+%{_liconsdir}/icolor/*x*/apps/org.widelands.Widelands.png
 %{_bindir}/widelands
 %{_mandir}/man6/widelands.6.*
+%{_datadir}/metainfo/org.widelands.Widelands.appdata.xml
 
 #------------------------------------------------
 
@@ -90,10 +92,8 @@ Without these files you will not be able to play.
 
 %files -n %{name}-basic-data
 
-#doc %{_datadir}/%{name}/COPYING
-#doc %{_datadir}/%{name}/CREDITS
-#doc %{_datadir}/%{name}/ChangeLog
-#doc %{_datadir}/%{name}/VERSION
+%doc %{_datadir}/doc/%{name}/CREDITS
+%doc %{_datadir}/doc/%{name}/VERSION
 %{_datadir}/%{name}/ai/
 %{_datadir}/%{name}/campaigns/
 %{_datadir}/%{name}/i18n/
