@@ -4,7 +4,7 @@ Version:	1.2
 Release:	2
 License:	GPLv2+
 Group:		Games/Strategy
-Url:		http://www.widelands.org/
+Url:		https://www.widelands.org/
 Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{name}-%{version}.tar.gz
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
