@@ -1,7 +1,7 @@
 Summary:	Settlers II open source clone
 Name:		widelands
-Version:	1.2
-Release:	2
+Version:	1.2.1
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		https://www.widelands.org/
@@ -9,7 +9,6 @@ Source0:	https://github.com/widelands/widelands/archive/refs/tags/v%{version}/%{
 #Source0:	https://launchpad.net/widelands/build20/build20/+download/widelands-build21.tar.bz2
 Source1:	%{name}.desktop
 Source10:	widelands.rpmlintrc
-Patch0:		widelands-1.0-libstdc++-11-missing-include.patch
 
 BuildRequires:	ninja
 BuildRequires:	cmake
@@ -48,6 +47,10 @@ Requires:	%{name}-basic-data
 Requires:	%{name}-maps
 Requires:	%{name}-i18n
 Requires:	%{name}-music
+
+%patchlist
+widelands-1.0-libstdc++-11-missing-include.patch
+widelands-zlib-ng.patch
 
 %description
 Widelands is an open source real-time strategy game. It is built upon 

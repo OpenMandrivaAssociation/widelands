@@ -1,0 +1,11 @@
+diff -up widelands-1.2.1/src/io/filesystem/zip_filesystem.cc.omv~ widelands-1.2.1/src/io/filesystem/zip_filesystem.cc
+--- widelands-1.2.1/src/io/filesystem/zip_filesystem.cc.omv~	2024-11-15 16:47:49.687221670 +0100
++++ widelands-1.2.1/src/io/filesystem/zip_filesystem.cc	2024-11-15 16:48:00.517338623 +0100
+@@ -16,6 +16,7 @@
+  *
+  */
+ 
++#include <zlib-ng.h>
+ #include "io/filesystem/zip_filesystem.h"
+ 
+ #include <cassert>
