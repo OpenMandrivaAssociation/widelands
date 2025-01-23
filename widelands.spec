@@ -41,7 +41,7 @@ BuildRequires:	pkgconfig(SDL2_image)
 BuildRequires:	pkgconfig(SDL2_mixer)
 BuildRequires:	pkgconfig(SDL2_net)
 BuildRequires:	pkgconfig(SDL2_ttf)
-BuildRequires:	pkgconfig(zlib)
+#BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(zlib-ng)
 
 Requires:	%{name}-basic-data
