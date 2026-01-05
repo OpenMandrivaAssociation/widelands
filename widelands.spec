@@ -1,7 +1,7 @@
 Summary:	Settlers II open source clone
 Name:		widelands
-Version:	1.2.1
-Release:	3
+Version:	1.3
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		https://www.widelands.org/
@@ -140,7 +140,6 @@ These are not needed, but may improve fun while playing.
 %{_datadir}/%{name}/music/
 
 #------------------------------------------------
-
 
 %prep
 %autosetup -n %{name}-%{version} -p1
