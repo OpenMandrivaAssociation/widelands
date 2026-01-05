@@ -81,7 +81,7 @@ Requires:	%{name} = %{version}
 Files to play %{name} in other languages than English.
 
 %files -n %{name}-i18n
-%{_datadir}/%{name}/locale*
+#{_datadir}/%{name}/locale*
 
 #------------------------------------------------
 
