@@ -50,7 +50,7 @@ Requires:	%{name}-i18n
 Requires:	%{name}-music
 
 %patchlist
-widelands-1.0-libstdc++-11-missing-include.patch
+#widelands-1.0-libstdc++-11-missing-include.patch
 widelands-zlib-ng.patch
 
 %description
