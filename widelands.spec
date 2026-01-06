@@ -168,6 +168,14 @@ install -m644 data/images/logos/wl-ico-16.png -D %{buildroot}%{_miconsdir}/%{nam
 install -m644 data/images/logos/wl-ico-32.png -D %{buildroot}%{_iconsdir}/%{name}.png
 install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{name}.png
 
+# from Fedora
+# Scripting magic to add proper %%lang() markings to the locale files
+find usr/share/widelands/i18n/translations/ -maxdepth 2 -type f -name \*_\*.po | sed -n 's#\(usr/share/widelands/i18n/translations/.*/\([^/]*\)_[^/]*\.po\)#%lang(\2) /\1#p' > %{_builddir}/%{?buildsubdir}/%{name}.files
+find usr/share/widelands/i18n/translations/ -maxdepth 2 -type f -name \*.po -and ! -name "*_*.po" | sed -n -e 's#\(usr/share/widelands/i18n/translations/.*/\([^/]\+\)\.po\)#%lang(\2) /\1#p' >> %{_builddir}/%{?buildsubdir}/%{name}.files
+find usr/share/widelands/ -mindepth 1 -maxdepth 1 -not -name i18n | sed -n 's#\(usr/share/widelands/*\)#/\1#p' >> %{_builddir}/%{?buildsubdir}/%{name}.files
+popd
+	
+
 # .desktop file
 #install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
