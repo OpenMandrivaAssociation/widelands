@@ -1,7 +1,7 @@
 Summary:	Settlers II open source clone
 Name:		widelands
-Version:	1.2.1
-Release:	3
+Version:	1.3
+Release:	1
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		https://www.widelands.org/
@@ -46,11 +46,11 @@ BuildRequires:	pkgconfig(zlib-ng)
 
 Requires:	%{name}-basic-data
 Requires:	%{name}-maps
-Requires:	%{name}-i18n
+Obsoletes:	%{name}-i18n
 Requires:	%{name}-music
 
 %patchlist
-widelands-1.0-libstdc++-11-missing-include.patch
+#widelands-1.0-libstdc++-11-missing-include.patch
 widelands-zlib-ng.patch
 
 %description
@@ -68,20 +68,7 @@ idea what Widelands is about.
 %{_iconsdir}/hicolor/*x*/apps/org.widelands.Widelands.png
 %{_bindir}/widelands
 %{_mandir}/man6/widelands.6.*
-%{_datadir}/metainfo/org.widelands.Widelands.appdata.xml
-
-#------------------------------------------------
-
-%package -n %{name}-i18n
-Summary:	Translations for %{name}
-Group:		Games/Strategy
-Requires:	%{name} = %{version}
-
-%description -n %{name}-i18n
-Files to play %{name} in other languages than English.
-
-%files -n %{name}-i18n
-%{_datadir}/%{name}/locale*
+%{_datadir}/metainfo/org.widelands.Widelands.metainfo.xml
 
 #------------------------------------------------
 
@@ -141,7 +128,6 @@ These are not needed, but may improve fun while playing.
 
 #------------------------------------------------
 
-
 %prep
 %autosetup -n %{name}-%{version} -p1
 
@@ -168,6 +154,14 @@ install -d %{buildroot}{%{_miconsdir},%{_liconsdir}}
 install -m644 data/images/logos/wl-ico-16.png -D %{buildroot}%{_miconsdir}/%{name}.png
 install -m644 data/images/logos/wl-ico-32.png -D %{buildroot}%{_iconsdir}/%{name}.png
 install -m644 data/images/logos/wl-ico-48.png -D %{buildroot}%{_liconsdir}/%{name}.png
+
+# from Fedora
+# Scripting magic to add proper %%lang() markings to the locale files
+find usr/share/widelands/i18n/translations/ -maxdepth 2 -type f -name \*_\*.po | sed -n 's#\(usr/share/widelands/i18n/translations/.*/\([^/]*\)_[^/]*\.po\)#%lang(\2) /\1#p' > %{_builddir}/%{?buildsubdir}/%{name}.files
+find usr/share/widelands/i18n/translations/ -maxdepth 2 -type f -name \*.po -and ! -name "*_*.po" | sed -n -e 's#\(usr/share/widelands/i18n/translations/.*/\([^/]\+\)\.po\)#%lang(\2) /\1#p' >> %{_builddir}/%{?buildsubdir}/%{name}.files
+find usr/share/widelands/ -mindepth 1 -maxdepth 1 -not -name i18n | sed -n 's#\(usr/share/widelands/*\)#/\1#p' >> %{_builddir}/%{?buildsubdir}/%{name}.files
+popd
+	
 
 # .desktop file
 #install -m644 %{SOURCE1} -D %{buildroot}/%{_datadir}/applications/%{name}.desktop
