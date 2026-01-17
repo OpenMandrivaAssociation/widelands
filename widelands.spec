@@ -46,7 +46,7 @@ BuildRequires:	pkgconfig(zlib-ng)
 
 Requires:	%{name}-basic-data
 Requires:	%{name}-maps
-Requires:	%{name}-i18n
+Obsoletes:	%{name}-i18n
 Requires:	%{name}-music
 
 %patchlist
@@ -69,19 +69,6 @@ idea what Widelands is about.
 %{_bindir}/widelands
 %{_mandir}/man6/widelands.6.*
 %{_datadir}/metainfo/org.widelands.Widelands.metainfo.xml
-
-#------------------------------------------------
-
-%package -n %{name}-i18n
-Summary:	Translations for %{name}
-Group:		Games/Strategy
-Requires:	%{name} = %{version}
-
-%description -n %{name}-i18n
-Files to play %{name} in other languages than English.
-
-%files -n %{name}-i18n
-#{_datadir}/%{name}/locale*
 
 #------------------------------------------------
 
