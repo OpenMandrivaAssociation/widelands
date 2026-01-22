@@ -1,7 +1,7 @@
 Summary:	Settlers II open source clone
 Name:		widelands
 Version:	1.3
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Games/Strategy
 Url:		https://www.widelands.org/
